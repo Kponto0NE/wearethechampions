@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda - Sistema Escolar</title>
+    <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-icon">📘</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar por Alunos, Eventos, Profissionais..." oninput="filterStudents()">
+            </div>
+        </div>
+        <div class="header-right">
+            <nav class="header-nav">
+                <button class="nav-btn active" onclick="switchTab('calendario')">
+                    <span class="icon">📅</span>
+                    <span>Calendário</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('notas')">
+                    <span class="icon">📝</span>
+                    <span>Notas</span>
+                </button>
+                <button class="nav-btn" onclick="switchTab('atividades')">
+                    <span class="icon">📋</span>
+                    <span>Atividades</span>
+                </button>
+            </nav>
+            <div class="user-profile">
+                <div class="avatar">👤</div>
+                <div class="user-info">
+                    <span class="user-name">Tranquedo Nieves</span>
+                    <span class="user-role">Professor</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-container">
+
+        <!-- Sidebar: Lista de Alunos -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="arrow-btn" id="arrowUp" onclick="scrollStudents(-1)">▲</button>
+                <h3>Alunos</h3>
+                <button class="arrow-btn" id="arrowDown" onclick="scrollStudents(1)">▼</button>
+            </div>
+            <div class="students-list" id="studentsList">
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Ana Clara Silva</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Bruno Oliveira</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar"></div>
+                    <div class="student-info">
+                        <span class="student-name">Carlos Mendes</span>
+                        <span class="student-turma">Turma B</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Diana Santos</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Eduardo Lima</span>
+                        <span class="student-turma">Turma B</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar"></div>
+                    <div class="student-info">
+                        <span class="student-name">Fernanda Costa</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Gabriel Souza</span>
+                        <span class="student-turma">Turma C</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Helena Rocha</span>
+                        <span class="student-turma">Turma B</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar"></div>
+                    <div class="student-info">
+                        <span class="student-name">Igor Ferreira</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Julia Martins</span>
+                        <span class="student-turma">Turma C</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar">👤</div>
+                    <div class="student-info">
+                        <span class="student-name">Lucas Pereira</span>
+                        <span class="student-turma">Turma A</span>
+                    </div>
+                </div>
+                <div class="student-item">
+                    <div class="student-avatar"></div>
+                    <div class="student-info">
+                        <span class="student-name">Maria Eduarda</span>
+                        <span class="student-turma">Turma B</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Calendário -->
+        <main class="calendar-container">
+            <div class="calendar-controls">
+                <button class="nav-month-btn" onclick="changeMonth(-1)">◀ Anterior</button>
+                <h2 id="currentYearMonth" class="year-month-display"></h2>
+                <button class="nav-month-btn" onclick="changeMonth(1)">Próximo ▶</button>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Gerado via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Detalhes do Dia -->
+    <div id="dayModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDayModal()">&times;</span>
+            <h2 id="modalDate"></h2>
+            <div class="modal-body">
+                <div class="event-section">
+                    <h3>📌 Eventos</h3>
+                    <div id="eventsList">
+                        <p class="no-events">Nenhum evento para este dia.</p>
+                    </div>
+                </div>
+                <div class="event-section">
+                    <h3>➕ Adicionar Evento</h3>
+                    <input type="text" id="eventInput" placeholder="Descrição do evento...">
+                    <button class="btn-add-event" onclick="addEvent()">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="agenda.js"></script>
+</body>
+</html>
