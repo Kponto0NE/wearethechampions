@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agenda do professor - Gerencie aulas, eventos e alunos">
+    <title>Minha Agenda | Professor - AEV</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="calendarprofessor.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-left">
+            <div class="logo" aria-label="Logo Agenda Escolar Virtual">
+                <img src="../assets/images/ImagemDeLogoDaAEV.png" alt="AEV" width="40" height="40">
+            </div>
+            <div class="search-bar" role="search">
+                <label for="searchInput" class="sr-only">Buscar alunos, eventos, profissionais</label>
+                <input 
+                    type="search" 
+                    id="searchInput" 
+                    placeholder="🔍 Buscar por alunos, eventos, profissionais..."
+                    aria-label="Buscar alunos, eventos ou profissionais"
+                >
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <nav class="header-nav" aria-label="Navegação principal">
+                <button class="nav-btn active" aria-current="page" aria-label="Ver calendário">
+                    <span class="icon" aria-hidden="true">📅</span>
+                    <span>Calendário</span>
+                </button>
+                <a href="boletimprof.html">
+                    <button class="nav-btn" aria-label="Gerenciar notas">
+                        <span class="icon" aria-hidden="true">📝</span>
+                        <span>Notas</span>
+                    </button>
+                </a>
+                <a href="atividadesprof.html">
+                    <button class="nav-btn" aria-label="Gerenciar exercícios">
+                        <span class="icon" aria-hidden="true">📋</span>
+                        <span>Exercícios</span>
+                    </button>
+                </a>
+            </nav>
+            
+            <div class="user-profile" aria-label="Perfil do usuário">
+                <div class="avatar" aria-hidden="true">👨‍🏫</div>
+                <div class="user-info">
+                    <span class="user-name" id="professorName">Carregando...</span>
+                    <span class="user-role">Professor</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <div class="main-container">
+        
+        <!-- Sidebar: Lista de Alunos/Turmas -->
+        <aside class="sidebar" id="sidebar" aria-label="Lista de alunos e turmas">
+            <div class="sidebar-header">
+                <button class="arrow-btn" id="scrollUp" aria-label="Rolar para cima">▲</button>
+                <h3>👥 Meus Alunos</h3>
+                <button class="arrow-btn" id="scrollDown" aria-label="Rolar para baixo">▼</button>
+            </div>
+            
+            <!-- Filtro de Turmas -->
+            <div class="turmas-filter">
+                <label for="filtroTurma" class="sr-only">Filtrar por turma</label>
+                <select id="filtroTurma" aria-label="Filtrar alunos por turma">
+                    <option value="all">Todas as Turmas</option>
+                    <option value="9A">9º Ano A</option>
+                    <option value="9B">9º Ano B</option>
+                    <option value="8A">8º Ano A</option>
+                </select>
+            </div>
+
+            <div class="students-list" id="studentsList" role="list">
+                <!-- Alunos injetados via JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Calendário Principal -->
+        <main id="main-content" class="calendar-container" role="main">
+            <div class="calendar-controls">
+                <button class="nav-month-btn" id="prevMonth" aria-label="Mês anterior">◀ Anterior</button>
+                <h2 id="currentYearMonth" class="year-month-display" aria-live="polite"></h2>
+                <button class="nav-month-btn" id="nextMonth" aria-label="Próximo mês">Próximo ▶</button>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Calendário mensal">
+                <!-- Gerado via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== MODAL: DETALHES DO DIA ========== -->
+    <div id="dayModal" class="modal" role="dialog" aria-labelledby="modalDate" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal()" aria-label="Fechar modal">&times;</button>
+            <h2 id="modalDate"></h2>
+            
+            <div class="modal-body">
+                <!-- Seção: Eventos do Dia -->
+                <section class="event-section" aria-labelledby="events-title">
+                    <h3 id="events-title">📌 Eventos do Dia</h3>
+                    <div id="eventsList" role="list">
+                        <p class="no-events">Nenhum evento para este dia.</p>
+                    </div>
+                </section>
+
+                <!-- Seção: Aulas Agendadas -->
+                <section class="event-section" aria-labelledby="aulas-title">
+                    <h3 id="aulas-title">🎓 Aulas Agendadas</h3>
+                    <div id="aulasList" role="list">
+                        <p class="no-events">Nenhuma aula para este dia.</p>
+                    </div>
+                </section>
+
+                <!-- Formulário: Adicionar Evento/Aula -->
+                <section class="add-event-section" aria-labelledby="add-event-title">
+                    <h3 id="add-event-title">➕ Adicionar à Agenda</h3>
+                    
+                    <div class="event-type-selector">
+                        <label>
+                            <input type="radio" name="eventType" value="evento" checked>
+                            <span>📌 Evento</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="eventType" value="aula">
+                            <span>🎓 Aula</span>
+                        </label>
+                    </div>
+                    
+                    <div class="event-input-row">
+                        <label for="newEventInput" class="sr-only">Descrição</label>
+                        <input 
+                            type="text" 
+                            id="newEventInput" 
+                            placeholder="Ex: Prova de Matemática - 9º B"
+                            aria-label="Descrição do evento ou aula"
+                        >
+                    </div>
+                    
+                    <div class="event-details-row">
+                        <div class="input-group">
+                            <label for="eventTime">Horário</label>
+                            <input type="time" id="eventTime" value="08:00">
+                        </div>
+                        <div class="input-group">
+                            <label for="eventTurma">Turma</label>
+                            <select id="eventTurma">
+                                <option value="">Selecione...</option>
+                                <option value="9A">9º Ano A</option>
+                                <option value="9B">9º Ano B</option>
+                                <option value="8A">8º Ano A</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn-add-event" id="btnAddEvent">💾 Adicionar à Agenda</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="calendarprofessor.js"></script>
+
+</body>
+</html>

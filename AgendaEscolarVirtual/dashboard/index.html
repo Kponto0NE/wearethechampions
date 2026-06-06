@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warhol Theme Clone</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <!-- ========== HEADER / HERO SECTION ========== -->
+    <header class="hero-section">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../assets/images/ImagemDeLogoDaAEV.png" alt="Logo AEV">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="../auth/login.html">Login</a></li>
+                <li><a href="../auth/register.html">Cadastro</a></li>
+                <li><a href="../components/navbar.html">Menu</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <span aria-label="Biblioteca">📚</span>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <h5 class="version">Versão Beta</h5>
+            <h1 class="main-title">Agenda Escolar Virtual</h1>
+            <p class="subtitle">Para o papel não mais desperdiçar, o futuro da escola acaba de chegar.</p>
+            <a class="btn btn-outline" href="../auth/login.html">Acessar a Plataforma</a>
+        </div>
+    </header>
+
+    <!-- ========== SEÇÃO: SOBRE A A.E.V (ATUALIZADA COM VÍDEO EM LOOP) ========== -->
+    <section class="refined-section">
+        <div class="container split-layout">
+            <div class="text-content">
+                <h2 class="section-title">A.E.V — Agenda Escolar Virtual</h2>
+                <p class="lead-text">Organize a rotina escolar de forma simples, moderna e eficiente.</p>
+                <p class="body-text">
+                    A Agenda Escolar Virtual foi desenvolvida para facilitar o dia a dia de alunos, professores e instituições de ensino, reunindo tarefas, provas, comunicados e compromissos em uma única plataforma digital. Com uma interface intuitiva e acessível, a solução oferece mais praticidade, organização e produtividade para o ambiente escolar.
+                </p>
+                <p class="body-text">
+                    Mais do que uma ferramenta, a A.E.V conecta tecnologia e educação para tornar a comunicação e o gerenciamento acadêmico mais rápidos, inteligentes e eficientes.
+                </p>
+            </div>
+            
+            <div class="visual-content video-wrapper">
+                <video 
+                    class="about-video" 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline
+                    aria-label="Vídeo explicativo sobre a Agenda Escolar Virtual">
+                    <source src="../assets/images/demostracao.mp4" type="video/mp4">
+                    <source src="../assets/images/demostracao.webm" type="video/webm">
+                    Seu navegador não suporta a tag de vídeo.
+                    <a href="../assets/images/demostracao.mp4">Clique aqui para baixar o vídeo</a>.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEÇÃO: HISTÓRIA DO PROJETO ========== -->
+    <section class="nav-section">
+        <div class="container split-layout">
+            <div class="nav-demo-content">
+                <div class="demo-phone-overlay">
+                    <!-- Conteúdo do mockup do celular será inserido aqui -->
+                </div>
+            </div>
+
+            <div class="text-content light-text">
+                <h2 class="section-title">A criação da Agenda Escolar Virtual</h2>
+                <p class="body-text">
+                    A Agenda Escolar Virtual foi criada por alunos da Escola Técnica de Santa Maria – ETSM com o objetivo de facilitar a organização acadêmica por meio de uma plataforma digital prática, intuitiva e acessível. O sistema reúne tarefas, provas, comunicados e compromissos em um único ambiente, promovendo mais produtividade e eficiência no cotidiano escolar.
+                </p>
+                <p class="body-text">
+                    O projeto contou com a participação de Kauan Gutemberg, responsável pela arquitetura, design e idealização da plataforma; Matheus, responsável pela programação do sistema; e Larissa, responsável pelo banco de dados. A união das áreas permitiu o desenvolvimento de uma solução moderna que conecta tecnologia e educação de forma inteligente e funcional.
+                </p>
+                <a href="../pages/about.html" class="btn btn-outline">Quer saber mais?</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

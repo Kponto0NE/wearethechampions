@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalhes completos da escola: turmas, professores, horários e informações">
+    <title>Detalhes da Escola | AEV</title>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="detalhesdscolas.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <div class="header-left">
+                <span class="logo-icon" aria-hidden="true">🏫</span>
+                <h1>Detalhes da Escola</h1>
+            </div>
+            <div class="user-profile">
+                <span class="user-name">👤 <span id="userName">Visitante</span></span>
+                <a href="dashboard.html" class="btn-back" aria-label="Voltar ao menu principal">
+                    ← Voltar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Cabeçalho da Escola -->
+        <section class="card school-header-section" aria-labelledby="school-title">
+            <div class="school-banner">
+                <span class="school-icon" aria-hidden="true">🎓</span>
+                <div class="school-title-group">
+                    <h2 id="school-title">Escola Municipal São José</h2>
+                    <span id="schoolCode" class="codigo-badge" aria-label="Código: ESC-482X">ESC-482X</span>
+                </div>
+            </div>
+            
+            <dl class="school-meta-grid">
+                <div class="meta-item">
+                    <dt><span class="meta-icon" aria-hidden="true">📍</span> Endereço</dt>
+                    <dd id="schoolAddress">Rua das Flores, 123 - Centro, São Paulo - SP</dd>
+                </div>
+                <div class="meta-item">
+                    <dt><span class="meta-icon" aria-hidden="true">📞</span> Telefone</dt>
+                    <dd id="schoolPhone">(11) 3456-7890</dd>
+                </div>
+                <div class="meta-item">
+                    <dt><span class="meta-icon" aria-hidden="true">✉️</span> E-mail</dt>
+                    <dd id="schoolEmail">contato@emsj.edu.br</dd>
+                </div>
+                <div class="meta-item">
+                    <dt><span class="meta-icon" aria-hidden="true">🌐</span> Site</dt>
+                    <dd><a href="#" id="schoolWebsite" target="_blank" rel="noopener">www.emsj.edu.br</a></dd>
+                </div>
+            </dl>
+        </section>
+
+        <!-- Seção: Estatísticas Rápidas -->
+        <section class="stats-section" aria-labelledby="stats-title">
+            <h3 id="stats-title" class="sr-only">Estatísticas da Escola</h3>
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <span class="stat-icon" aria-hidden="true">📚</span>
+                    <strong id="statTurmas">12</strong>
+                    <span>Turmas</span>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-icon" aria-hidden="true">👨‍🏫</span>
+                    <strong id="statProfessores">28</strong>
+                    <span>Professores</span>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-icon" aria-hidden="true">🎒</span>
+                    <strong id="statAlunos">340</strong>
+                    <span>Alunos</span>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-icon" aria-hidden="true">🕐</span>
+                    <strong>3</strong>
+                    <span>Turnos</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção: Turmas -->
+        <section class="card section-turmas" aria-labelledby="turmas-title">
+            <div class="section-header">
+                <h3 id="turmas-title">📚 Turmas Cadastradas</h3>
+                <button class="btn-toggle" aria-expanded="true" aria-controls="listaTurmas" onclick="toggleSection('listaTurmas', this)">
+                    <span class="toggle-icon" aria-hidden="true">▼</span>
+                </button>
+            </div>
+            
+            <div id="listaTurmas" class="turmas-list" role="list">
+                <!-- Turma Item -->
+                <article class="turma-card" role="listitem">
+                    <div class="turma-header">
+                        <h4>6º Ano A - Matutino</h4>
+                        <span class="turma-code">T-601A</span>
+                    </div>
+                    <div class="turma-body">
+                        <div class="turma-info">
+                            <p><strong>Professor Regente:</strong> Maria Silva</p>
+                            <p><strong>Alunos:</strong> 28 matriculados</p>
+                            <p><strong>Horário:</strong> 07:00 - 12:00</p>
+                        </div>
+                        <button class="btn-sm btn-outline" onclick="verDetalhesTurma('T-601A')">
+                            Ver Detalhes →
+                        </button>
+                    </div>
+                </article>
+
+                <article class="turma-card" role="listitem">
+                    <div class="turma-header">
+                        <h4>7º Ano B - Vespertino</h4>
+                        <span class="turma-code">T-702B</span>
+                    </div>
+                    <div class="turma-body">
+                        <div class="turma-info">
+                            <p><strong>Professor Regente:</strong> João Santos</p>
+                            <p><strong>Alunos:</strong> 25 matriculados</p>
+                            <p><strong>Horário:</strong> 13:00 - 18:00</p>
+                        </div>
+                        <button class="btn-sm btn-outline" onclick="verDetalhesTurma('T-702B')">
+                            Ver Detalhes →
+                        </button>
+                    </div>
+                </article>
+
+                <article class="turma-card" role="listitem">
+                    <div class="turma-header">
+                        <h4>9º Ano C - Noturno</h4>
+                        <span class="turma-code">T-903C</span>
+                    </div>
+                    <div class="turma-body">
+                        <div class="turma-info">
+                            <p><strong>Professor Regente:</strong> Ana Costa</p>
+                            <p><strong>Alunos:</strong> 22 matriculados</p>
+                            <p><strong>Horário:</strong> 19:00 - 22:30</p>
+                        </div>
+                        <button class="btn-sm btn-outline" onclick="verDetalhesTurma('T-903C')">
+                            Ver Detalhes →
+                        </button>
+                    </div>
+                </article>
+            </div>
+            
+            <button class="btn-load-more" id="btnLoadTurmas">
+                Carregar Mais Turmas +
+            </button>
+        </section>
+
+        <!-- Seção: Professores -->
+        <section class="card section-professores" aria-labelledby="prof-title">
+            <div class="section-header">
+                <h3 id="prof-title">👨‍🏫 Corpo Docente</h3>
+                <button class="btn-toggle" aria-expanded="true" aria-controls="listaProfessores" onclick="toggleSection('listaProfessores', this)">
+                    <span class="toggle-icon" aria-hidden="true">▼</span>
+                </button>
+            </div>
+            
+            <div id="listaProfessores" class="professores-grid" role="list">
+                <!-- Professor Card -->
+                <article class="prof-card" role="listitem">
+                    <div class="prof-avatar" aria-hidden="true">👩‍🏫</div>
+                    <div class="prof-info">
+                        <h4>Maria Silva</h4>
+                        <span class="prof-disciplina">Matemática</span>
+                        <p class="prof-detail">📧 maria.silva@emsj.edu.br</p>
+                        <p class="prof-detail">🕐 Seg, Qua, Sex - 07:00-12:00</p>
+                    </div>
+                    <button class="btn-icon-only" aria-label="Ver perfil de Maria Silva" onclick="verPerfilProfessor('maria-silva')">
+                        👁️
+                    </button>
+                </article>
+
+                <article class="prof-card" role="listitem">
+                    <div class="prof-avatar" aria-hidden="true">👨‍🏫</div>
+                    <div class="prof-info">
+                        <h4>João Santos</h4>
+                        <span class="prof-disciplina">Português</span>
+                        <p class="prof-detail">📧 joao.santos@emsj.edu.br</p>
+                        <p class="prof-detail">🕐 Ter, Qui - 13:00-18:00</p>
+                    </div>
+                    <button class="btn-icon-only" aria-label="Ver perfil de João Santos" onclick="verPerfilProfessor('joao-santos')">
+                        👁️
+                    </button>
+                </article>
+
+                <article class="prof-card" role="listitem">
+                    <div class="prof-avatar" aria-hidden="true">👩‍🏫</div>
+                    <div class="prof-info">
+                        <h4>Ana Costa</h4>
+                        <span class="prof-disciplina">Ciências</span>
+                        <p class="prof-detail">📧 ana.costa@emsj.edu.br</p>
+                        <p class="prof-detail">🕐 Seg, Qua, Sex - 19:00-22:30</p>
+                    </div>
+                    <button class="btn-icon-only" aria-label="Ver perfil de Ana Costa" onclick="verPerfilProfessor('ana-costa')">
+                        👁️
+                    </button>
+                </article>
+
+                <article class="prof-card" role="listitem">
+                    <div class="prof-avatar" aria-hidden="true">👨‍🏫</div>
+                    <div class="prof-info">
+                        <h4>Carlos Oliveira</h4>
+                        <span class="prof-disciplina">História</span>
+                        <p class="prof-detail">📧 carlos.oliveira@emsj.edu.br</p>
+                        <p class="prof-detail">🕐 Ter, Qui - 07:00-12:00</p>
+                    </div>
+                    <button class="btn-icon-only" aria-label="Ver perfil de Carlos Oliveira" onclick="verPerfilProfessor('carlos-oliveira')">
+                        👁️
+                    </button>
+                </article>
+            </div>
+            
+            <button class="btn-load-more" id="btnLoadProfs">
+                Carregar Mais Professores +
+            </button>
+        </section>
+
+        <!-- Seção: Grade de Horários -->
+        <section class="card section-horarios" aria-labelledby="horarios-title">
+            <div class="section-header">
+                <h3 id="horarios-title">🕐 Grade de Horários</h3>
+                <div class="horarios-filters">
+                    <label for="filtroTurno" class="sr-only">Filtrar por turno</label>
+                    <select id="filtroTurno" class="select-filter" onchange="filtrarHorarios()">
+                        <option value="todos">Todos os Turnos</option>
+                        <option value="matutino">Matutino</option>
+                        <option value="vespertino">Vespertino</option>
+                        <option value="noturno">Noturno</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="horarios-wrapper">
+                <table class="horarios-table" role="grid" aria-labelledby="horarios-title">
+                    <thead>
+                        <tr>
+                            <th scope="col">Horário</th>
+                            <th scope="col">Segunda</th>
+                            <th scope="col">Terça</th>
+                            <th scope="col">Quarta</th>
+                            <th scope="col">Quinta</th>
+                            <th scope="col">Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoHorarios">
+                        <tr>
+                            <th scope="row" class="time-slot">07:00 - 07:50</th>
+                            <td data-turno="matutino">Matemática<br><small>6º A - Sala 101</small></td>
+                            <td data-turno="matutino">Português<br><small>7º B - Sala 102</small></td>
+                            <td data-turno="matutino">Ciências<br><small>6º A - Lab</small></td>
+                            <td data-turno="matutino">História<br><small>8º C - Sala 103</small></td>
+                            <td data-turno="matutino">Educação Física<br><small>Quadra</small></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="time-slot">07:50 - 08:40</th>
+                            <td data-turno="matutino">Português<br><small>6º A - Sala 101</small></td>
+                            <td data-turno="matutino">Matemática<br><small>7º B - Sala 102</small></td>
+                            <td data-turno="matutino">Arte<br><small>6º A - Sala 104</small></td>
+                            <td data-turno="matutino">Geografia<br><small>8º C - Sala 103</small></td>
+                            <td data-turno="matutino">Matemática<br><small>9º C - Sala 105</small></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="time-slot">13:00 - 13:50</th>
+                            <td data-turno="vespertino">História<br><small>7º B - Sala 201</small></td>
+                            <td data-turno="vespertino">Ciências<br><small>8º C - Lab</small></td>
+                            <td data-turno="vespertino">Português<br><small>7º B - Sala 201</small></td>
+                            <td data-turno="vespertino">Inglês<br><small>9º C - Sala 202</small></td>
+                            <td data-turno="vespertino">Geografia<br><small>7º B - Sala 201</small></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="time-slot">19:00 - 19:50</th>
+                            <td data-turno="noturno">Matemática<br><small>9º C - Sala 301</small></td>
+                            <td data-turno="noturno">Português<br><small>EJA - Sala 302</small></td>
+                            <td data-turno="noturno">Ciências<br><small>9º C - Lab</small></td>
+                            <td data-turno="noturno">História<br><small>EJA - Sala 302</small></td>
+                            <td data-turno="noturno">Revisão<br><small>Sala 301</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p class="horarios-legend">
+                <small>💡 Dica: Use o filtro acima para visualizar apenas um turno específico.</small>
+            </p>
+        </section>
+
+        <!-- Seção: Informações Adicionais -->
+        <section class="card section-info" aria-labelledby="info-extra-title">
+            <h3 id="info-extra-title">📋 Informações Adicionais</h3>
+            
+            <div class="info-extra-grid">
+                <article class="info-box">
+                    <h4>🗓️ Calendário Escolar</h4>
+                    <p>Início das aulas: <strong>05/02/2024</strong></p>
+                    <p>Término do ano letivo: <strong>15/12/2024</strong></p>
+                    <p>Férias escolares: <strong>01/07 a 31/07</strong></p>
+                    <a href="#" class="link-underline">Ver calendário completo →</a>
+                </article>
+                
+                <article class="info-box">
+                    <h4>📢 Comunicados Recentes</h4>
+                    <ul class="comunicados-list">
+                        <li>🔔 Reunião de pais: 15/03 às 19h</li>
+                        <li>🎭 Feira de Ciências: 22/04</li>
+                        <li>🏃 Dia da Família na Escola: 10/05</li>
+                    </ul>
+                    <a href="#" class="link-underline">Ver todos os comunicados →</a>
+                </article>
+                
+                <article class="info-box">
+                    <h4>🔗 Links Úteis</h4>
+                    <ul class="links-list">
+                        <li><a href="#" target="_blank">📚 Portal do Aluno</a></li>
+                        <li><a href="#" target="_blank">📝 Diário de Classe Online</a></li>
+                        <li><a href="#" target="_blank">🍽️ Cardápio da Merenda</a></li>
+                        <li><a href="#" target="_blank">📞 Fale com a Secretaria</a></li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Seção: Ações -->
+        <section class="actions-section">
+            <button type="button" class="btn-secondary" onclick="window.history.back()">
+                ← Voltar
+            </button>
+            <button type="button" class="btn-primary" onclick="exportarDados()">
+                📥 Exportar Dados
+            </button>
+        </section>
+
+    </main>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT ========== -->
+    <script src="js/detalhes-escola.js"></script>
+
+</body>
+</html>

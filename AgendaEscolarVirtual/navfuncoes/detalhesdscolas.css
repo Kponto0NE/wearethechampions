@@ -1,0 +1,776 @@
+/* ========================================
+   🎨 CSS - Detalhes da Escola
+   Agenda Escolar Virtual (A.E.V)
+   Tema: Azul Institucional
+   ======================================== */
+
+/* ========== VARIÁVEIS GLOBAIS ========== */
+:root {
+    /* Fontes */
+    --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
+    
+    /* Cores Base */
+    --color-dark: #1a1a1a;
+    --color-light: #ffffff;
+    --color-gray: #f4f4f4;
+    --color-gray-dark: #e2e8f0;
+    --color-text: #666;
+    --color-border: #e2e8f0;
+    --color-muted: #999;
+    
+    /* Cores da Marca (Azul Institucional) */
+    --color-primary: #164c84;
+    --color-primary-dark: #082345;
+    --color-primary-light: #2a6ba3;
+    --color-primary-rgba: rgba(22, 76, 132, 0.15);
+    --color-primary-shadow: rgba(22, 76, 132, 0.3);
+    
+    /* Cores de Estado */
+    --color-success: #28a745;
+    --color-success-light: #d4edda;
+    --color-warning: #ffc107;
+    --color-warning-light: #fff3cd;
+    --color-danger: #dc3545;
+    --color-danger-light: #f8d7da;
+    
+    /* Efeitos */
+    --transition-default: all 0.3s ease;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --shadow-primary: 0 5px 15px var(--color-primary-shadow);
+    
+    /* Espaçamentos */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Bordas */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 25px;
+    --radius-circle: 50%;
+    
+    /* Z-Index */
+    --z-header: 100;
+    --z-toast: 1100;
+    --z-modal: 1000;
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+}
+
+body {
+    min-height: 100vh;
+    background-image: url('../assets/images/ImagemDeFundoCentral-Home.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--color-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-default);
+}
+
+a:hover { color: var(--color-primary); }
+
+ul, ol { list-style: none; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ========== UTILITÁRIOS DE ACESSIBILIDADE ========== */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: var(--color-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: var(--z-toast);
+    transition: top var(--transition-default);
+    border-radius: 0 0 var(--radius-sm) 0;
+    font-weight: 600;
+}
+.skip-link:focus { top: 0; outline: 2px solid var(--color-light); outline-offset: 2px; }
+
+a:focus, button:focus, input:focus, select:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 var(--spacing-xl) var(--spacing-xl);
+}
+
+/* ========== HEADER ========== */
+.header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-light);
+    padding: var(--spacing-md) var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+}
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+.logo-icon { font-size: 1.5rem; }
+.header-content h1 { font-size: 1.3rem; font-weight: 600; }
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+.user-name { font-size: 0.9rem; opacity: 0.9; }
+.btn-back {
+    color: var(--color-light);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition-default);
+}
+.btn-back:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* ========== CARDS ========== */
+.card {
+    background: var(--color-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+.card h2, .card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+/* ========== SEÇÃO: CABEÇALHO DA ESCOLA ========== */
+.school-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+.school-icon {
+    font-size: 2.5rem;
+    background: var(--color-primary-rgba);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+.school-title-group {
+    flex: 1;
+    min-width: 200px;
+}
+.school-title-group h2 {
+    margin: 0 0 var(--spacing-xs);
+    font-size: 1.5rem;
+    color: var(--color-dark);
+}
+.codigo-badge {
+    background: var(--color-primary);
+    color: var(--color-light);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.school-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+.meta-item dt {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.meta-icon { font-size: 1.1rem; }
+.meta-item dd {
+    color: var(--color-dark);
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 500;
+}
+.meta-item dd a {
+    color: var(--color-primary-light);
+}
+.meta-item dd a:hover {
+    text-decoration: underline;
+}
+
+/* ========== ESTATÍSTICAS ========== */
+.stats-section {
+    margin-bottom: var(--spacing-lg);
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+.stat-card {
+    background: var(--color-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: var(--transition-default);
+}
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+.stat-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+}
+.stat-card strong {
+    display: block;
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+.stat-card span {
+    color: var(--color-text);
+    font-size: 0.9rem;
+}
+
+/* ========== SEÇÕES COM LISTAS ========== */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+.section-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+.btn-toggle {
+    background: var(--color-gray);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-default);
+}
+.btn-toggle:hover { background: var(--color-primary-light); color: white; }
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.btn-toggle[aria-expanded="false"] .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* ========== CARD DE TURMAS ========== */
+.turmas-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+.turma-card {
+    background: var(--color-gray);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-md);
+    border-left: 4px solid var(--color-primary);
+    transition: var(--transition-default);
+}
+.turma-card:hover {
+    box-shadow: var(--shadow-sm);
+    border-left-color: var(--color-primary-dark);
+}
+.turma-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+.turma-header h4 {
+    margin: 0;
+    color: var(--color-dark);
+    font-size: 1.1rem;
+}
+.turma-code {
+    background: var(--color-primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.turma-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+.turma-info {
+    flex: 1;
+    min-width: 200px;
+}
+.turma-info p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+.turma-info strong { color: var(--color-dark); }
+
+/* Botões */
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-default);
+    font-weight: 500;
+}
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+}
+.btn-outline:hover {
+    background: var(--color-primary);
+    color: white;
+}
+.btn-load-more {
+    display: block;
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: transparent;
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: var(--transition-default);
+    font-weight: 500;
+}
+.btn-load-more:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-rgba);
+}
+
+/* ========== PROFESSORES GRID ========== */
+.professores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+.prof-card {
+    background: var(--color-gray);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: var(--transition-default);
+}
+.prof-card:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+.prof-avatar {
+    font-size: 2rem;
+    background: var(--color-primary-rgba);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-circle);
+    flex-shrink: 0;
+}
+.prof-info {
+    flex: 1;
+    min-width: 0;
+}
+.prof-info h4 {
+    margin: 0 0 2px;
+    font-size: 1rem;
+    color: var(--color-dark);
+}
+.prof-disciplina {
+    display: block;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+.prof-detail {
+    margin: 2px 0;
+    font-size: 0.85rem;
+    color: var(--color-text);
+}
+.btn-icon-only {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-circle);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-default);
+    flex-shrink: 0;
+}
+.btn-icon-only:hover {
+    background: var(--color-primary-dark);
+    transform: scale(1.05);
+}
+
+/* ========== TABELA DE HORÁRIOS ========== */
+.horarios-filters {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+.select-filter {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.horarios-wrapper {
+    overflow-x: auto;
+    margin: var(--spacing-md) 0;
+}
+.horarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 600px;
+}
+.horarios-table th,
+.horarios-table td {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    vertical-align: middle;
+}
+.horarios-table thead {
+    background: var(--color-primary);
+    color: white;
+}
+.horarios-table th {
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.horarios-table tbody tr:nth-child(even) {
+    background: var(--color-gray);
+}
+.horarios-table .time-slot {
+    background: var(--color-primary-light);
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+.horarios-table td small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-top: 2px;
+}
+.horarios-legend {
+    text-align: center;
+    color: var(--color-muted);
+    margin-top: var(--spacing-sm);
+}
+
+/* Filtragem de horários */
+.horarios-table tbody tr td[data-turno]:not([data-turno="matutino"]):not([data-turno="vespertino"]):not([data-turno="noturno"]) {
+    /* Filtro aplicado via JS */
+}
+
+/* ========== INFORMAÇÕES ADICIONAIS ========== */
+.info-extra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-lg);
+}
+.info-box {
+    background: var(--color-gray);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-primary);
+}
+.info-box h4 {
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-sm);
+    font-size: 1rem;
+}
+.info-box p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+.info-box strong { color: var(--color-dark); }
+.comunicados-list,
+.links-list {
+    margin: var(--spacing-sm) 0;
+}
+.comunicados-list li,
+.links-list li {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+.links-list a {
+    color: var(--color-primary-light);
+    display: block;
+}
+.links-list a:hover {
+    text-decoration: underline;
+}
+.link-underline {
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+    color: var(--color-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.link-underline:hover {
+    text-decoration: underline;
+}
+
+/* ========== AÇÕES ========== */
+.actions-section {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: var(--spacing-xl) 0;
+}
+.btn-primary,
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-default);
+    border: none;
+    font-size: 1rem;
+}
+.btn-primary {
+    background: var(--color-primary);
+    color: white;
+}
+.btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+.btn-accent {
+    background: var(--color-success);
+}
+.btn-accent:hover {
+    background: #218838;
+}
+.btn-primary:active,
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* ========== TOAST ========== */
+.toast {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    background: var(--color-dark);
+    color: var(--color-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: var(--z-toast);
+    font-weight: 500;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+.toast.success { background: var(--color-success); }
+.toast.error { background: var(--color-danger); }
+.toast.warning { background: var(--color-warning); color: var(--color-dark); }
+.toast.info { background: var(--color-primary); }
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-sm);
+    }
+    .header-left {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    .user-profile {
+        width: 100%;
+        justify-content: center;
+    }
+    .container {
+        margin: 1rem auto;
+        padding: 0 var(--spacing-sm) var(--spacing-sm);
+    }
+    .card { padding: var(--spacing-lg); }
+    
+    .school-meta-grid {
+        grid-template-columns: 1fr;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .turma-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .professores-grid {
+        grid-template-columns: 1fr;
+    }
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .actions-section {
+        flex-direction: column;
+    }
+    .actions-section button {
+        width: 100%;
+    }
+    .toast {
+        left: var(--spacing-sm);
+        right: var(--spacing-sm);
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-icon { font-size: 1.2rem; }
+    .header-content h1 { font-size: 1.1rem; }
+    .school-icon { font-size: 2rem; }
+    .school-title-group h2 { font-size: 1.2rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-card strong { font-size: 1.4rem; }
+    .horarios-table { font-size: 0.8rem; }
+    .horarios-table th,
+    .horarios-table td { padding: 4px 2px; }
+}
+
+/* ========== PREFERÊNCIA POR REDUÇÃO DE MOVIMENTO ========== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========== MODO ALTO CONTRASTE ========== */
+@media (prefers-contrast: high) {
+    .btn-primary, .btn-secondary, .btn-outline {
+        border: 2px solid currentColor;
+    }
+    .codigo-badge {
+        border: 2px solid var(--color-light);
+    }
+    .input-group input:focus,
+    .select-filter:focus {
+        box-shadow: 0 0 0 3px var(--color-dark);
+    }
+}

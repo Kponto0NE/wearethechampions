@@ -1,0 +1,460 @@
+/* ========================================
+   🎨 CSS - Agenda Escolar Virtual (A.E.V)
+   Tema: Warhol Clone
+   ======================================== */
+
+/* ========== VARIÁVEIS GLOBAIS ========== */
+:root {
+    /* Fontes */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Roboto', sans-serif;
+    
+    /* Cores */
+    --color-dark: #1a1a1a;
+    --color-light: #ffffff;
+    --color-gray: #f4f4f4;
+    --color-text: #777;
+    --color-text-light: #aaa;
+    
+    /* Transições */
+    --transition-default: all 0.3s ease;
+    
+    /* Espaçamentos */
+    --spacing-sm: 20px;
+    --spacing-md: 30px;
+    --spacing-lg: 60px;
+    --spacing-xl: 100px;
+}
+
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--color-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links e Listas */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-default);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Imagens responsivas por padrão */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ========== UTILITÁRIOS ========== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+/* Botões */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: var(--transition-default);
+    border: none;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--color-light);
+    color: var(--color-light);
+}
+
+.btn-outline:hover {
+    background: rgba(10, 48, 83, 0.52);
+    border-color: transparent;
+}
+
+/* Layout em colunas */
+.split-layout {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+/* ========== HEADER / HERO SECTION ========== */
+.hero-section {
+    min-height: 700px;
+    height: 100vh;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+        url('../assets/images/ImagemDeFundoCentral-Home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--color-light);
+    position: relative;
+}
+
+/* Navbar */
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.logo img {
+    height: 42px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 1.2rem;
+}
+
+/* Conteúdo do Hero */
+.hero-content {
+    padding: 0 20px;
+}
+
+.hero-content .version {
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.hero-content .main-title {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.hero-content .subtitle {
+    font-weight: 300;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========== SEÇÃO: SOBRE A A.E.V - COM VÍDEO ========== */
+.refined-section {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--color-light);
+}
+
+.text-content {
+    flex: 1;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.lead-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.body-text {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+/* Wrapper do vídeo */
+.visual-content.video-wrapper {
+    flex: 1.2;
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+}
+
+.about-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: var(--transition-default);
+}
+
+.about-video:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Overlay com legenda */
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: var(--color-light);
+    pointer-events: none;
+}
+
+.video-caption {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* ========== SEÇÃO: HISTÓRIA DO PROJETO ========== */
+.nav-section {
+    padding: var(--spacing-xl) 0;
+    background-color: #111;
+    color: var(--color-light);
+}
+
+.nav-section .text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav-section .section-title {
+    color: var(--color-light);
+}
+
+.nav-section .body-text {
+    color: var(--color-text-light);
+}
+
+/* Mockup do celular */
+.nav-demo-content {
+    flex: 1;
+    height: 400px;
+    background-image: url('../assets/images/ImagemDeFundoCentral-Home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.demo-phone-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 992px) {
+    .split-layout {
+        gap: 40px;
+    }
+    
+    .hero-content .main-title {
+        font-size: 3rem;
+    }
+    
+    .about-video {
+        aspect-ratio: 16/9;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Layout geral */
+    .split-layout {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .text-content,
+    .visual-content {
+        width: 100%;
+    }
+    
+    /* Navbar mobile */
+    .navbar {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    /* Hero */
+    .hero-section {
+        min-height: auto;
+        padding: 120px 0 80px;
+    }
+    
+    .hero-content .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content .subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Vídeo no mobile */
+    .visual-content.video-wrapper {
+        order: -1;
+        margin-bottom: 20px;
+    }
+    
+    .about-video {
+        aspect-ratio: 16/9;
+        border-radius: 6px;
+    }
+    
+    .video-caption {
+        font-size: 0.85rem;
+    }
+    
+    /* Seção escura */
+    .nav-section {
+        padding: 60px 0;
+    }
+    
+    .nav-demo-content {
+        width: 100%;
+        height: 300px;
+    }
+    
+    .demo-phone-overlay {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content .main-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+    }
+    
+    .logo img {
+        height: 36px;
+    }
+    
+    .video-overlay {
+        padding: 10px 15px;
+    }
+    
+    .video-caption {
+        font-size: 0.8rem;
+    }
+}
+
+/* ========== ACESSIBILIDADE ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .about-video {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .about-video:hover {
+        transform: none !important;
+    }
+}
+
+/* Foco visível para navegação por teclado */
+a:focus,
+button:focus,
+.btn:focus {
+    outline: 2px solid var(--color-light);
+    outline-offset: 2px;
+}

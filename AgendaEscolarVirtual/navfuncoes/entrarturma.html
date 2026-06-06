@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<!-- Matheus, arrume o botão de votar. -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encontre e entre na sua turma usando o código de acesso">
+    <title>Entrar na Turma | AEV</title>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="entrar.gerenciar.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <div class="header-left">
+                <span class="logo-icon" aria-hidden="true">📘</span>
+                <h1>Entrar na Turma</h1>
+            </div>
+            <div class="user-profile">
+                <span class="user-name">👤 Visitante</span>
+                <a href="dashboard.html" class="btn-back" aria-label="Voltar ao menu principal">
+                    ← Voltar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Busca por Código da Turma -->
+        <section class="card search-section" aria-labelledby="search-title">
+            <div class="search-header">
+                <span class="icon-search" aria-hidden="true">🔍</span>
+                <h2 id="search-title">Encontre sua Turma</h2>
+                <p>Digite o código fornecido pelo professor para acessar a turma</p>
+            </div>
+
+            <form id="formBuscarTurma" class="search-form" novalidate>
+                <div class="input-group">
+                    <label for="codigoTurma">Código da Turma <span aria-hidden="true">*</span></label>
+                    <div class="code-input-wrapper">
+                        <input 
+                            type="text" 
+                            id="codigoTurma" 
+                            name="codigoTurma"
+                            placeholder="Ex: MAT-482X" 
+                            autocomplete="off"
+                            pattern="[A-Z]{3}-\d+[A-Z]"
+                            required
+                            aria-required="true"
+                            aria-describedby="codigoHint"
+                        >
+                        <button type="button" class="btn-paste" onclick="colarCodigo('codigoTurma')" aria-label="Colar código da área de transferência">
+                            📋 Colar
+                        </button>
+                    </div>
+                    <small id="codigoHint" class="input-hint">O código geralmente tem o formato: <code>XXX-000X</code></small>
+                    <span class="error" id="error-codigo">Código inválido</span>
+                </div>
+
+                <button type="submit" class="btn-search">
+                    <span class="btn-icon" aria-hidden="true">🔎</span>
+                    Buscar Turma
+                </button>
+            </form>
+
+            <!-- Mensagem de Erro -->
+            <div id="errorMsg" class="error-message hidden" role="alert" aria-live="assertive">
+                <span class="error-icon" aria-hidden="true">⚠️</span>
+                <p id="errorMsgText">Código não encontrado. Verifique e tente novamente.</p>
+            </div>
+        </section>
+
+        <!-- Resultado da Busca (Turma Encontrada) -->
+        <section id="turmaEncontrada" class="card result-section hidden" role="region" aria-labelledby="result-title" aria-live="polite">
+            <div class="result-header">
+                <span class="success-icon" aria-hidden="true">✅</span>
+                <h2 id="result-title">Turma Encontrada!</h2>
+            </div>
+
+            <div class="turma-details">
+                <article class="turma-info-card" aria-labelledby="turmaNome">
+                    <div class="turma-header-info">
+                        <h3 id="turmaNome">Matemática - 9º Ano A</h3>
+                        <span id="turmaCodigo" class="codigo-badge" aria-label="Código: MAT-482X">MAT-482X</span>
+                    </div>
+                    
+                    <dl class="turma-grid-info">
+                        <div class="info-item">
+                            <dt><span class="info-icon" aria-hidden="true">🏫</span> Escola</dt>
+                            <dd id="infoEscola">Escola Municipal São José</dd>
+                        </div>
+                        
+                        <div class="info-item">
+                            <dt><span class="info-icon" aria-hidden="true">📅</span> Dias da Semana</dt>
+                            <dd id="infoDias">Segunda, Quarta, Sexta</dd>
+                        </div>
+                        
+                        <div class="info-item">
+                            <dt><span class="info-icon" aria-hidden="true">⏰</span> Horário</dt>
+                            <dd id="infoHorario">08:00 - 09:30</dd>
+                        </div>
+                        
+                        <div class="info-item">
+                            <dt><span class="info-icon" aria-hidden="true">🕐</span> Turno</dt>
+                            <dd id="infoTurno">Matutino</dd>
+                        </div>
+                    </dl>
+                </article>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn-secondary" onclick="limparBusca()">
+                        ← Buscar Outra
+                    </button>
+                    <button type="button" class="btn-primary" onclick="entrarNaTurma()" aria-label="Confirmar entrada na turma">
+                        Entrar na Turma →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Instruções -->
+        <section class="card info-section" aria-labelledby="info-title">
+            <h3 id="info-title">📖 Como funciona?</h3>
+            <ol class="info-grid">
+                <li class="info-card">
+                    <span class="info-number" aria-hidden="true">1</span>
+                    <h4>Receba o Código</h4>
+                    <p>O professor fornecerá um código único para cada turma (ex: <code>MAT-482X</code>)</p>
+                </li>
+                <li class="info-card">
+                    <span class="info-number" aria-hidden="true">2</span>
+                    <h4>Digite o Código</h4>
+                    <p>Insira o código no campo acima e clique em "Buscar Turma"</p>
+                </li>
+                <li class="info-card">
+                    <span class="info-number" aria-hidden="true">3</span>
+                    <h4>Acesse a Turma</h4>
+                    <p>Confirme os dados e clique em "Entrar na Turma" para acessar</p>
+                </li>
+            </ol>
+        </section>
+
+    </main>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT ========== -->
+    <script src="js/entrarturma.js"></script>
+
+</body>
+</html>

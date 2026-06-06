@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Senha</title>
+    <link rel="stylesheet" href="recovery.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="image-section">
+            <!-- Mantém a mesma imagem do login para consistência visual -->
+            <img src="../assets/images/imagemDerecuperacao.png" alt="Ilustração de Recuperação">
+        </div>
+
+        <div class="form-section">
+            <div class="form-content">
+                <h1>Recuperação de Senha</h1>
+                
+                <p class="recovery-instructions">
+                    Digite seu e-mail cadastrado e enviaremos um link para redefinir sua senha.
+                </p>
+
+                <form action="#" method="POST">
+                    <div class="input-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="Seu e-mail cadastrado" required>
+                    </div>
+
+                    <button type="submit" class="btn-login">Enviar Link de Recuperação</button>
+
+                    <p class="back-to-login">
+                        Lembrou sua senha? <a href="login.html">Voltar para o Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script simples para toggle de senha (caso queira reutilizar) -->
+    <script>
+        // Mantido caso queira expandir a funcionalidade no futuro
+        document.querySelector('.toggle-password')?.addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        });
+    </script>
+</body>
+</html>

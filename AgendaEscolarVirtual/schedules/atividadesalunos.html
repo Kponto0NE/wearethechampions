@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confira e entregue suas atividades escolares - Agenda Escolar Virtual">
+    <title>Minhas Atividades | Aluno - AEV</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="atividadesalunos.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            
+            <!-- Navegação e Logo -->
+            <div class="header-left">
+                <button type="button" class="btn btn-back" onclick="voltar()" aria-label="Voltar para página anterior">
+                    ← Voltar
+                </button>
+                <div class="logo">
+                    <h1>📘 Agenda Escolar</h1>
+                </div>
+            </div>
+
+            <!-- Área do Usuário -->
+            <div class="user-info">
+                <div class="user-meta">
+                    <span class="user-name">🎓 <strong id="aluno-nome">Carregando...</strong></span>
+                    <small class="user-turma" id="turma-info">-</small>
+                </div>
+                <button type="button" class="btn btn-logout" onclick="sair()" aria-label="Sair da conta">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Minhas Atividades -->
+        <section class="section atividades-section" aria-labelledby="atividades-title">
+            
+            <div class="section-header">
+                <h2 id="atividades-title">📋 Minhas Atividades</h2>
+                <button type="button" class="btn btn-secondary" onclick="filtrarPendentes()" aria-label="Mostrar apenas atividades pendentes">
+                    🔔 Pendentes
+                </button>
+            </div>
+            
+            <p class="lead">
+                Confira as atividades enviadas pelos seus professores. Visualize os materiais, 
+                baixe para estudar e entregue suas respostas quando concluir.
+            </p>
+
+            <!-- Filtros de Busca -->
+            <form class="filters-form" role="search" aria-label="Filtrar atividades" onsubmit="return aplicarFiltros(event)">
+                <div class="filters-row">
+                    <div class="input-group">
+                        <label for="filtro-disciplina">Disciplina</label>
+                        <select id="filtro-disciplina" name="disciplina">
+                            <option value="all">Todas</option>
+                            <option value="mat">Matemática</option>
+                            <option value="port">Português</option>
+                            <option value="hist">História</option>
+                            <option value="geo">Geografia</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="filtro-status">Status</label>
+                        <select id="filtro-status" name="status">
+                            <option value="all">Todos</option>
+                            <option value="nova">🔵 Nova</option>
+                            <option value="visualizada">🟡 Visualizada</option>
+                            <option value="entregue">🟢 Entregue</option>
+                            <option value="atrasada">🔴 Atrasada</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="busca-atividade">Buscar</label>
+                        <input 
+                            type="search" 
+                            id="busca-atividade" 
+                            name="busca"
+                            placeholder="🔍 Título ou professor..."
+                            aria-label="Buscar por título ou nome do professor"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        🔍 Filtrar
+                    </button>
+                </div>
+            </form>
+
+            <!-- Lista de Atividades -->
+            <div id="atividades-container" class="atividades-list" role="list" aria-live="polite">
+                <!-- Cards injetados via JavaScript -->
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ========== MODAL: DETALHES DA ATIVIDADE ========== -->
+    <div id="modal-detalhes" class="modal" role="dialog" aria-labelledby="modal-detalhes-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal('modal-detalhes')" aria-label="Fechar modal">
+                &times;
+            </button>
+            
+            <h2 id="modal-detalhes-title">📄 Detalhes da Atividade</h2>
+            
+            <div class="modal-body" id="modal-detalhes-body">
+                <!-- Preenchido via JS -->
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modal-detalhes')">
+                    Fechar
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-visualizar-pdf">
+                    👁 Visualizar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL: VISUALIZADOR DE PDF ========== -->
+    <div id="modal-pdf" class="modal modal-large" role="dialog" aria-labelledby="modal-pdf-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-pdf-title">📄 Visualizando Atividade</h3>
+                <button type="button" class="close" onclick="fecharPdfViewer()" aria-label="Fechar visualizador">
+                    &times;
+                </button>
+            </div>
+            <iframe id="pdf-frame" src="" title="Visualizador de PDF" aria-label="Conteúdo do PDF"></iframe>
+            <div class="modal-footer">
+                <a id="pdf-download" href="#" download class="btn btn-outline">
+                    ⬇️ Baixar
+                </a>
+                <button type="button" class="btn btn-secondary" onclick="fecharPdfViewer()">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL: ENTREGA DE ATIVIDADE ========== -->
+    <div id="modal-entrega" class="modal" role="dialog" aria-labelledby="modal-entrega-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal('modal-entrega')" aria-label="Fechar modal">
+                &times;
+            </button>
+            
+            <h2 id="modal-entrega-title">📤 Entregar Atividade</h2>
+            
+            <p class="modal-subtitle">
+                Aluno: <strong id="entrega-aluno">-</strong> | 
+                Atividade: <strong id="entrega-atividade">-</strong>
+            </p>
+
+            <!-- Área de Drop/Upload -->
+            <div id="drop-zone-entrega" class="drop-zone" role="button" tabindex="0" aria-label="Clique ou arraste um arquivo PDF">
+                <span class="drop-icon" aria-hidden="true">📎</span>
+                <p class="drop-text"><strong>Anexe sua resposta em PDF</strong></p>
+                <small>Formato: PDF | Máx: 10MB</small>
+                <input type="file" id="file-entrega" name="arquivo" accept=".pdf" hidden aria-label="Selecionar arquivo PDF">
+            </div>
+
+            <!-- Informações do Arquivo -->
+            <div id="file-info-entrega" class="file-info" role="status" aria-live="polite">
+                ✅ <strong>Arquivo:</strong> <span id="file-name-entrega"></span> 
+                (<span id="file-size-entrega"></span> MB)
+            </div>
+
+            <!-- Barra de Progresso -->
+            <div id="progress-entrega" class="progress-wrapper" aria-live="polite">
+                <div class="progress-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" id="progress-bar-entrega"></div>
+                </div>
+                <small>Enviando...</small>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal('modal-entrega')">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-success" id="btn-confirmar-entrega" disabled onclick="confirmarEntrega()">
+                    ✅ Confirmar Entrega
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="atividadesalunos.js"></script>
+
+</body>
+</html>

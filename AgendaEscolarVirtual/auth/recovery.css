@@ -1,0 +1,196 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('../assets/images/ImagemDeFundoCentral-Home.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Container Principal do Card */
+.login-container {
+    display: flex;
+    width: 800px;
+    max-width: 90%;
+    height: 550px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Seção da Imagem (Esquerda) */
+.image-section {
+    width: 50%;
+    background-color: #164c84;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Seção do Formulário (Direita) */
+.form-section {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-content h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/* Texto de instruções */
+.recovery-instructions {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #164c84;
+}
+
+/* Botão Enviar */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #0f3c74;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.btn-login:hover {
+    background-color: #082345;
+}
+
+.btn-login:active {
+    transform: scale(0.98);
+}
+
+/* Texto de Voltar para Login */
+.back-to-login {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.back-to-login a {
+    text-decoration: none;
+    color: #0055d6;
+    font-weight: 600;
+}
+
+.back-to-login a:hover {
+    text-decoration: underline;
+}
+
+/* Mensagem de sucesso (opcional - pode ser exibida via JS) */
+.success-message {
+    text-align: center;
+    color: #28a745;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #d4edda;
+    border-radius: 8px;
+    display: none;
+}
+
+/* Responsividade para celulares */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .image-section {
+        width: 100%;
+        height: 200px;
+    }
+
+    .form-section {
+        width: 100%;
+        padding: 30px;
+    }
+    
+    .form-content h1 {
+        font-size: 28px;
+    }
+}
+
+/* Container de senha (mantido para consistência, caso queira adicionar campo de nova senha depois) */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password:hover {
+    color: #000;
+}

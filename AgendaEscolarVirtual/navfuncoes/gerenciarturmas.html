@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<!-- Matheus, arrume o botão de votar. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie turmas cadastradas - Painel do Professor">
+    <title>Gerenciar Turmas | AEV</title>
+    <link rel="stylesheet" href="gerenciar.css">
+    <style>
+        /* Animações específicas das abas */
+        [role="tabpanel"] {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        [role="tabpanel"].hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .tab-btn.active {
+            position: relative;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: var(--color-light);
+            border-radius: 2px 2px 0 0;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { width: 0; opacity: 0; }
+            to { width: 80%; opacity: 1; }
+        }
+        .tab-btn:not(.active):hover {
+            background: var(--color-primary-light);
+            color: var(--color-light);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CABEÇALHO -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <div class="header-left">
+                <span class="logo-icon" aria-hidden="true">📘</span>
+                <h1>Gerenciar Turmas</h1>
+            </div>
+            <div class="user-profile">
+                <span class="user-name">👨‍🏫 Professor</span>
+                <a href="dashboard.html" class="btn-back" aria-label="Voltar ao menu principal">← Voltar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Abas de Navegação -->
+        <nav class="tabs" role="tablist" aria-label="Seções de gerenciamento">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-cadastrar" id="tab-cadastrar" tabindex="0">
+                ➕ Cadastrar
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-listar" id="tab-listar" tabindex="-1">
+                📋 Turmas Cadastradas
+            </button>
+        </nav>
+
+        <!-- Painel: Cadastrar Nova Turma -->
+        <section id="panel-cadastrar" class="card form-section" role="tabpanel" aria-labelledby="tab-cadastrar">
+            <h2>📝 Nova Turma</h2>
+            <form id="formTurma" novalidate>
+                <div class="input-group">
+                    <label for="nomeMateria">Nome da Matéria <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nomeMateria" name="nomeMateria" placeholder="Ex: Matemática, História, Física..." required aria-required="true">
+                    <span class="error" id="error-nomeMateria">Informe o nome da matéria</span>
+                </div>
+                <div class="input-group">
+                    <label>Dias da Semana <span aria-hidden="true">*</span></label>
+                    <div class="days-container" role="group" aria-label="Selecione os dias da semana">
+                        <label class="day-check"><input type="checkbox" name="dias" value="Seg" aria-label="Segunda-feira"> Seg</label>
+                        <label class="day-check"><input type="checkbox" name="dias" value="Ter" aria-label="Terça-feira"> Ter</label>
+                        <label class="day-check"><input type="checkbox" name="dias" value="Qua" aria-label="Quarta-feira"> Qua</label>
+                        <label class="day-check"><input type="checkbox" name="dias" value="Qui" aria-label="Quinta-feira"> Qui</label>
+                        <label class="day-check"><input type="checkbox" name="dias" value="Sex" aria-label="Sexta-feira"> Sex</label>
+                    </div>
+                    <span class="error" id="error-dias">Selecione pelo menos um dia</span>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="horarioInicio">Início <span aria-hidden="true">*</span></label>
+                        <input type="time" id="horarioInicio" name="horarioInicio" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="horarioFim">Fim <span aria-hidden="true">*</span></label>
+                        <input type="time" id="horarioFim" name="horarioFim" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="turno">Turno <span aria-hidden="true">*</span></label>
+                        <select id="turno" name="turno" required aria-required="true">
+                            <option value="">Selecione...</option>
+                            <option value="Matutino">Matutino</option>
+                            <option value="Vespertino">Vespertino</option>
+                            <option value="Noturno">Noturno</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="escolaSelect">Vincular à Escola <span aria-hidden="true">*</span></label>
+                    <div class="escola-select-wrapper">
+                        <select id="escolaSelect" name="escolaId" required aria-required="true">
+                            <option value="">Selecione uma escola...</option>
+                            <option value="1">CEF 308</option>
+                            <option value="2">Colégio Santa Rita</option>
+                        </select>
+                        <button type="button" class="btn-add" onclick="abrirModalNovaEscola()" aria-label="Cadastrar nova escola">+ Nova</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="vagas">Número de Vagas</label>
+                        <input type="number" id="vagas" name="vagas" placeholder="Ex: 30" min="1" max="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="anoLetivo">Ano Letivo</label>
+                        <input type="number" id="anoLetivo" name="anoLetivo" placeholder="Ex: 2024" min="2020" max="2030" value="2024">
+                    </div>
+                </div>
+                <div id="codeResult" class="code-result hidden" role="status" aria-live="polite">
+                    <p><strong>Código de Acesso da Turma:</strong></p>
+                    <div class="code-box">
+                        <span id="generatedCode" class="code-value">---</span>
+                        <button type="button" class="btn-copy" onclick="copyCode('generatedCode')" aria-label="Copiar código">📋 Copiar</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="previewCode()">🔍 Testar Código</button>
+                    <button type="reset" class="btn-secondary">Limpar</button>
+                    <button type="submit" class="btn-primary">💾 Cadastrar Turma</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Painel: Lista de Turmas -->
+        <section id="panel-listar" class="card list-section hidden" role="tabpanel" aria-labelledby="tab-listar" hidden>
+            <div class="section-header">
+                <h2>📋 Turmas Cadastradas</h2>
+                <div class="search-box">
+                    <input type="search" id="searchTurmas" placeholder="🔍 Buscar turma..." aria-label="Buscar turmas">
+                </div>
+            </div>
+            <div class="filters-bar">
+                <select id="filterEscola" aria-label="Filtrar por escola">
+                    <option value="">Todas as escolas</option>
+                    <option value="1">CEF 308</option>
+                    <option value="2">Colégio Santa Rita</option>
+                </select>
+                <select id="filterStatus" aria-label="Filtrar por status">
+                    <option value="">Todos os status</option>
+                    <option value="ativa">Ativas</option>
+                    <option value="inativa">Inativas</option>
+                </select>
+                <button class="btn-filter" onclick="aplicarFiltros()">🔎 Filtrar</button>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" aria-label="Lista de turmas cadastradas">
+                    <thead>
+                        <tr>
+                            <th scope="col">Turma</th>
+                            <th scope="col">Escola</th>
+                            <th scope="col">Horário</th>
+                            <th scope="col">Alunos</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="actions">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="turmasTableBody">
+                        <tr data-id="101">
+                            <td><strong>Matemática - 9º Ano A</strong><br><small class="text-muted">Código: MAT-9A-2024</small></td>
+                            <td>CEF 308</td>
+                            <td>Seg, Qua, Sex<br><small>08:00 - 09:30</small></td>
+                            <td><span class="badge badge-primary">28/30</span></td>
+                            <td><span class="badge badge-success">Ativa</span></td>
+                            <td class="actions">
+                                <button class="btn-icon btn-edit" aria-label="Editar turma" onclick="editarTurma(101)">✏️</button>
+                                <button class="btn-icon btn-users" aria-label="Ver alunos" onclick="verAlunos(101)">👥</button>
+                                <button class="btn-icon btn-config" aria-label="Configurar turma" onclick="configurarTurma(101)">⚙️</button>
+                                <button class="btn-icon btn-delete" aria-label="Excluir turma" onclick="confirmarExclusao(101, 'turma')">🗑️</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="btn-page" disabled>← Anterior</button>
+                <span class="page-info">Página 1 de 5</span>
+                <button class="btn-page">Próxima →</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: Confirmar Exclusão -->
+    <div id="modalExcluir" class="modal" role="alertdialog" aria-labelledby="modal-excluir-title" aria-modal="true" hidden>
+        <div class="modal-content modal-sm">
+            <h3 id="modal-excluir-title">⚠️ Confirmar Exclusão</h3>
+            <p id="modal-excluir-msg">Tem certeza que deseja excluir esta turma? Todos os dados associados serão perdidos.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="fecharModal('modalExcluir')">Cancelar</button>
+                <button type="button" class="btn-danger" onclick="executarExclusao()">🗑️ Excluir Permanentemente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Configurar Turma -->
+    <div id="modalConfigurar" class="modal" role="dialog" aria-labelledby="modal-config-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal('modalConfigurar')" aria-label="Fechar">&times;</button>
+            <h3 id="modal-config-title">⚙️ Configurar Turma</h3>
+            <form id="formConfigTurma">
+                <div class="input-group">
+                    <label for="configStatus">Status da Turma</label>
+                    <select id="configStatus">
+                        <option value="ativa">✅ Ativa</option>
+                        <option value="inativa">⏸️ Inativa</option>
+                        <option value="encerrada">🔒 Encerrada</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label><input type="checkbox" id="configPermitirMatricula" checked> Permitir novas matrículas</label>
+                </div>
+                <div class="input-group">
+                    <label><input type="checkbox" id="configNotificacoes" checked> Enviar notificações aos alunos</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalConfigurar')">Cancelar</button>
+                    <button type="submit" class="btn-primary">💾 Salvar Configurações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ========== MÓDULO DE ABAS (Embutido para facilitar) ==========
+        (function() {
+            'use strict';
+            
+            function initTabs() {
+                const tabs = document.querySelectorAll('.tab-btn');
+                const panels = document.querySelectorAll('[role="tabpanel"]');
+                
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        ativarAba(tab, tabs, panels);
+                    });
+                    tab.addEventListener('keydown', (e) => handleTabKeyboard(e, tab, tabs));
+                });
+                
+                if (window.location.hash) {
+                    const targetTab = document.querySelector(`[aria-controls="${window.location.hash.slice(1)}"]`);
+                    if (targetTab) ativarAba(targetTab, tabs, panels);
+                }
+            }
+            
+            function ativarAba(tabAtiva, todasTabs, todosPanels) {
+                const targetId = tabAtiva.getAttribute('aria-controls');
+                const targetPanel = document.getElementById(targetId);
+                if (!targetPanel) return;
+                
+                todasTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.setAttribute('tabindex', '-1');
+                });
+                todosPanels.forEach(panel => {
+                    panel.classList.add('hidden');
+                    panel.setAttribute('hidden', '');
+                });
+                
+                tabAtiva.classList.add('active');
+                tabAtiva.setAttribute('aria-selected', 'true');
+                tabAtiva.setAttribute('tabindex', '0');
+                
+                targetPanel.classList.remove('hidden');
+                targetPanel.removeAttribute('hidden');
+                targetPanel.style.opacity = '0';
+                targetPanel.style.transform = 'translateY(10px)';
+                requestAnimationFrame(() => {
+                    targetPanel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    targetPanel.style.opacity = '1';
+                    targetPanel.style.transform = 'translateY(0)';
+                });
+                
+                if (history.replaceState) {
+                    history.replaceState(null, null, `#${targetId}`);
+                }
+                const titulo = targetPanel.querySelector('h2');
+                if (titulo) titulo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            function handleTabKeyboard(e, tabAtual, todasTabs) {
+                const tabsArray = Array.from(todasTabs);
+                const currentIndex = tabsArray.indexOf(tabAtual);
+                let nextIndex;
+                switch (e.key) {
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        nextIndex = (currentIndex + 1) % tabsArray.length;
+                        tabsArray[nextIndex].focus();
+                        break;
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        nextIndex = (currentIndex - 1 + tabsArray.length) % tabsArray.length;
+                        tabsArray[nextIndex].focus();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        tabsArray[0].focus();
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        tabsArray[tabsArray.length - 1].focus();
+                        break;
+                }
+            }
+            
+            window.mudarAba = function(tabId) {
+                const tab = document.getElementById(tabId);
+                if (tab) {
+                    const tabs = document.querySelectorAll('.tab-btn');
+                    const panels = document.querySelectorAll('[role="tabpanel"]');
+                    ativarAba(tab, tabs, panels);
+                }
+            };
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTabs);
+            } else {
+                initTabs();
+            }
+        })();
+        
+        // ========== FUNÇÕES AUXILIARES ==========
+        function copyCode(elementId) {
+            const code = document.getElementById(elementId)?.textContent;
+            if (code && code !== '---') {
+                navigator.clipboard.writeText(code).then(() => showToast('📋 Código copiado!', 'success'));
+            }
+        }
+        
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+        
+        function fecharModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.hidden = true;
+                modal.style.display = 'none';
+            }
+        }
+        
+        function confirmarExclusao(id, tipo) {
+            const modal = document.getElementById('modalExcluir');
+            const msg = document.getElementById('modal-excluir-msg');
+            if (modal && msg) {
+                msg.textContent = `Tem certeza que deseja excluir esta ${tipo}? Esta ação não pode ser desfeita.`;
+                modal.hidden = false;
+                modal.style.display = 'block';
+                modal.dataset.itemId = id;
+                modal.dataset.itemType = tipo;
+            }
+        }
+        
+        function executarExclusao() {
+            const modal = document.getElementById('modalExcluir');
+            const id = modal?.dataset.itemId;
+            const tipo = modal?.dataset.itemType;
+            console.log(`Excluindo ${tipo} ID: ${id}`);
+            showToast(`✅ ${tipo === 'escola' ? 'Escola' : 'Turma'} excluída com sucesso!`, 'success');
+            fecharModal('modalExcluir');
+        }
+        
+        function verAlunos(id) {
+            showToast(`👥 Carregando alunos da turma ID: ${id}...`, 'info');
+        }
+        
+        function editarTurma(id) {
+            showToast(`✏️ Editando turma ID: ${id}...`, 'info');
+        }
+        
+        function configurarTurma(id) {
+            const modal = document.getElementById('modalConfigurar');
+            if (modal) {
+                modal.dataset.turmaId = id;
+                modal.hidden = false;
+                modal.style.display = 'block';
+            }
+        }
+        
+        function previewCode() {
+            const codigo = 'TUR-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            document.getElementById('generatedCode').textContent = codigo;
+            document.getElementById('codeResult').classList.remove('hidden');
+            showToast('🔍 Código gerado para teste!', 'info');
+        }
+        
+        function abrirModalNovaEscola() {
+            showToast('🏫 Redirecionando para cadastro de escola...', 'info');
+            window.location.href = 'gerenciar-escolas.html';
+        }
+        
+        function aplicarFiltros() {
+            const escola = document.getElementById('filterEscola').value;
+            const status = document.getElementById('filterStatus').value;
+            showToast(`🔎 Filtrando: Escola=${escola || 'Todas'}, Status=${status || 'Todos'}`, 'info');
+        }
+        
+        // Submit do formulário de turma
+        document.getElementById('formTurma')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nomeMateria').value;
+            const dias = document.querySelectorAll('input[name="dias"]:checked');
+            
+            if (!nome) {
+                document.getElementById('error-nomeMateria').style.display = 'block';
+                return;
+            }
+            if (dias.length === 0) {
+                document.getElementById('error-dias').style.display = 'block';
+                return;
+            }
+            
+            const codigo = 'TUR-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            document.getElementById('generatedCode').textContent = codigo;
+            document.getElementById('codeResult').classList.remove('hidden');
+            showToast('✅ Turma cadastrada com sucesso!', 'success');
+            this.reset();
+            document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+        });
+        
+        // Configurar form de configurações
+        document.getElementById('formConfigTurma')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('✅ Configurações salvas com sucesso!', 'success');
+            fecharModal('modalConfigurar');
+        });
+    </script>
+</body>
+</html>

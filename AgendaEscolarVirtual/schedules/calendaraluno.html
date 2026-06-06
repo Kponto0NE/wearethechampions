@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agenda escolar do aluno - Acompanhe atividades, eventos e prazos">
+    <title>Minha Agenda | Aluno - AEV</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="calendaraluno.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-left">
+            <div class="logo" aria-label="Logo Agenda Escolar Virtual">
+                <img src="../assets/images/ImagemDeLogoDaAEV.png" alt="AEV" width="40" height="40">
+            </div>
+            <div class="search-bar" role="search">
+                <label for="searchInput" class="sr-only">Buscar atividades e eventos</label>
+                <input 
+                    type="search" 
+                    id="searchInput" 
+                    placeholder="🔍 Buscar por atividades e eventos..."
+                    aria-label="Buscar atividades e eventos"
+                >
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <nav class="header-nav" aria-label="Navegação principal">
+                <button class="nav-btn active" aria-current="page" aria-label="Ver calendário">
+                    <span class="icon" aria-hidden="true">📅</span>
+                    <span>Calendário</span>
+                </button>
+                <button class="nav-btn" aria-label="Ver boletim">
+                    <span class="icon" aria-hidden="true">📝</span>
+                    <a href="boletimalun.html"><span>Boletim</span></a>
+                </button>
+                <button class="nav-btn" aria-label="Ver atividades">
+                    <span class="icon" aria-hidden="true">📋</span>
+                    <a href="atividadesalunos.html"><span>Atividades</span></a>
+                </button>
+            </nav>
+            
+            <div class="user-profile" aria-label="Perfil do usuário">
+                <div class="avatar" aria-hidden="true">👤</div>
+                <div class="user-info">
+                    <span class="user-name" id="userName">Carregando...</span>
+                    <span class="user-role">Aluno</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <div class="main-container">
+        
+        <!-- Sidebar: Lista de Atividades -->
+        <aside class="sidebar" id="sidebar" aria-label="Lista de atividades">
+            <div class="sidebar-header">
+                <button class="arrow-btn" id="scrollUp" aria-label="Rolar para cima">▲</button>
+                <h3>📋 Minhas Atividades</h3>
+                <button class="arrow-btn" id="scrollDown" aria-label="Rolar para baixo">▼</button>
+            </div>
+
+            <div class="activities-list" id="activitiesList" role="list">
+                <!-- Atividades injetadas via JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Calendário Principal -->
+        <main id="main-content" class="calendar-container" role="main">
+            <div class="calendar-controls">
+                <button class="nav-month-btn" id="prevMonth" aria-label="Mês anterior">◀ Anterior</button>
+                <h2 id="currentYearMonth" class="year-month-display" aria-live="polite"></h2>
+                <button class="nav-month-btn" id="nextMonth" aria-label="Próximo mês">Próximo ▶</button>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Calendário mensal">
+                <!-- Gerado via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== MODAL: DETALHES DO DIA ========== -->
+    <div id="dayModal" class="modal" role="dialog" aria-labelledby="modalDate" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal()" aria-label="Fechar modal">&times;</button>
+            <h2 id="modalDate"></h2>
+            
+            <div class="modal-body">
+                <!-- Seção: Eventos -->
+                <section class="event-section" aria-labelledby="events-title">
+                    <h3 id="events-title">📌 Eventos</h3>
+                    <div id="eventsList" role="list">
+                        <p class="no-events">Nenhum evento para este dia.</p>
+                    </div>
+                </section>
+
+                <!-- Seção: Atividades do Dia -->
+                <section class="event-section" aria-labelledby="activities-day-title">
+                    <h3 id="activities-day-title">📚 Atividades</h3>
+                    <div id="activitiesDayList" role="list">
+                        <p class="no-events">Nenhuma atividade para este dia.</p>
+                    </div>
+                </section>
+
+                <!-- Formulário: Adicionar Evento (simulado) -->
+                <section class="add-event-section" aria-labelledby="add-event-title">
+                    <h3 id="add-event-title">➕ Adicionar Lembrete</h3>
+                    <div class="event-input-row">
+                        <label for="newEventInput" class="sr-only">Descrição do evento</label>
+                        <input 
+                            type="text" 
+                            id="newEventInput" 
+                            placeholder="Ex: Entregar trabalho de História"
+                            aria-label="Descrição do novo evento"
+                        >
+                        <button type="button" class="btn-add-event" id="btnAddEvent">Adicionar</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="calendaraluno.js"></script>
+
+</body>
+</html>

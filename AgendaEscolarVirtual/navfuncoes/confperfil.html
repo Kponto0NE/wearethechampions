@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie suas configurações de conta - Agenda Escolar Virtual">
+    <title>Configurações da Conta | AEV</title>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="confperfil.css">
+</head>
+<body>
+
+    <!-- Matheus, arrume o botão de votar............................................................ -->
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            
+            <!-- Navegação e Logo -->
+            <div class="header-left">
+                <button type="button" class="btn btn-back" onclick="voltar()" aria-label="Voltar para página anterior">
+                    ← Voltar
+                </button>
+                <div class="logo">
+                    <h1>📘 Agenda Escolar</h1>
+                </div>
+            </div>
+
+            <!-- Área do Usuário -->
+            <div class="user-info">
+                <div class="user-meta">
+                    <span class="user-name">⚙️ <strong>Configurações</strong></span>
+                </div>
+                <a href="../dashboard/index.html">
+                <button type="button" class="btn btn-logout" onclick="sair()" aria-label="Sair da conta">
+                    Sair
+                </button>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Perfil do Usuário -->
+        <section class="section profile-section" aria-labelledby="perfil-title">
+            <h2 id="perfil-title" class="section-title">👤 Meu Perfil</h2>
+            
+            <div class="profile-card">
+                <div class="profile-avatar" id="profile-avatar" aria-label="Avatar do usuário">MS</div>
+                <div class="profile-info">
+                    <h3 id="profile-name">Maria Silva</h3>
+                    <p>📧 <span id="profile-email">maria.silva@email.com</span></p>
+                    <p>📱 <span id="profile-phone">+55 (11) 99999-9999</span></p>
+                    <span class="profile-badge" role="status">✓ Conta Verificada</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Alterar Senha -->
+        <section class="section password-section" aria-labelledby="senha-title">
+            <h2 id="senha-title" class="section-title">🔐 Alterar Senha</h2>
+            
+            <form id="form-senha" onsubmit="return salvarSenha(event)" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="senha-atual">Senha Atual <span aria-hidden="true">*</span></label>
+                        <input 
+                            type="password" 
+                            id="senha-atual" 
+                            name="senha-atual"
+                            required 
+                            minlength="6" 
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            aria-required="true"
+                        >
+                        <span class="hint">Digite sua senha atual para confirmar</span>
+                        <span class="error" id="error-senha-atual">Senha atual incorreta</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="senha-nova">Nova Senha <span aria-hidden="true">*</span></label>
+                        <input 
+                            type="password" 
+                            id="senha-nova" 
+                            name="senha-nova"
+                            required 
+                            minlength="8" 
+                            placeholder="Mínimo 8 caracteres"
+                            autocomplete="new-password"
+                            aria-required="true"
+                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}"
+                        >
+                        <span class="hint">Use letras, números e símbolos para maior segurança</span>
+                        <span class="error" id="error-senha-nova">A senha deve ter no mínimo 8 caracteres</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senha-confirm">Confirmar Nova Senha <span aria-hidden="true">*</span></label>
+                        <input 
+                            type="password" 
+                            id="senha-confirm" 
+                            name="senha-confirm"
+                            required 
+                            placeholder="Digite novamente"
+                            autocomplete="new-password"
+                            aria-required="true"
+                        >
+                        <span class="error" id="error-senha-confirm">As senhas não coincidem</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="limparSenha()">
+                        Limpar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        💾 Salvar Nova Senha
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção: Atualizar E-mail -->
+        <section class="section email-section" aria-labelledby="email-title">
+            <h2 id="email-title" class="section-title">📧 Atualizar E-mail</h2>
+            
+            <form id="form-email" onsubmit="return solicitarVerificacaoEmail(event)" novalidate>
+                <div class="form-group">
+                    <label for="novo-email">Novo Endereço de E-mail <span aria-hidden="true">*</span></label>
+                    <input 
+                        type="email" 
+                        id="novo-email" 
+                        name="novo-email"
+                        required 
+                        placeholder="novo.email@gmail.com"
+                        value="maria.silva@email.com"
+                        autocomplete="email"
+                        aria-required="true"
+                    >
+                    <span class="hint">Você receberá um código de verificação neste e-mail</span>
+                    <span class="error" id="error-novo-email">Digite um e-mail válido</span>
+                </div>
+                
+                <div id="status-email" class="verification-status verified" role="status" aria-live="polite">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span>E-mail atual verificado ✓</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('form-email').reset()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btn-email">
+                        📤 Enviar Código de Verificação
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção: Atualizar Telefone -->
+        <section class="section phone-section" aria-labelledby="telefone-title">
+            <h2 id="telefone-title" class="section-title">📱 Número de Telefone</h2>
+            
+            <form id="form-telefone" onsubmit="return solicitarVerificacaoTelefone(event)" novalidate>
+                <div class="form-group">
+                    <label for="novo-telefone">Número para WhatsApp/SMS <span aria-hidden="true">*</span></label>
+                    <input 
+                        type="tel" 
+                        id="novo-telefone" 
+                        name="novo-telefone"
+                        required 
+                        placeholder="+55 (11) 99999-9999"
+                        value="+55 (11) 99999-9999"
+                        autocomplete="tel"
+                        aria-required="true"
+                        pattern="\+55\s?\(\d{2}\)\s?9?\d{4}-?\d{4}"
+                    >
+                    <span class="hint">Formato: +55 (DD) 99999-9999 • Usado para recuperação de conta</span>
+                    <span class="error" id="error-novo-telefone">Digite um número válido</span>
+                </div>
+                
+                <div id="status-telefone" class="verification-status verified" role="status" aria-live="polite">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span>Telefone verificado ✓</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('form-telefone').reset()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btn-telefone">
+                        📲 Enviar Código SMS
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção: Preferências de Notificação -->
+        <section class="section preferences-section" aria-labelledby="prefs-title">
+            <h2 id="prefs-title" class="section-title">🔔 Preferências de Notificação</h2>
+            
+            <div class="toggle-list">
+                <div class="toggle-row">
+                    <div class="toggle-info">
+                        <h4>Autenticação em Duas Etapas</h4>
+                        <p>Receba um código extra ao fazer login</p>
+                    </div>
+                    <label class="toggle" for="toggle-2fa">
+                        <input type="checkbox" id="toggle-2fa" name="two-factor">
+                        <span class="toggle-slider" aria-hidden="true"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row">
+                    <div class="toggle-info">
+                        <h4>Notificações por E-mail</h4>
+                        <p>Receba atualizações e lembretes no seu e-mail</p>
+                    </div>
+                    <label class="toggle" for="toggle-email-notif">
+                        <input type="checkbox" id="toggle-email-notif" name="email-notif" checked>
+                        <span class="toggle-slider" aria-hidden="true"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row">
+                    <div class="toggle-info">
+                        <h4>Notificações por WhatsApp</h4>
+                        <p>Receba alertas importantes via mensagem</p>
+                    </div>
+                    <label class="toggle" for="toggle-whatsapp-notif">
+                        <input type="checkbox" id="toggle-whatsapp-notif" name="whatsapp-notif" checked>
+                        <span class="toggle-slider" aria-hidden="true"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" onclick="salvarPreferencias()">
+                    💾 Salvar Preferências
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== MODAIS DE VERIFICAÇÃO ========== -->
+    
+    <!-- Modal: Verificar E-mail -->
+    <div id="modal-verificar-email" class="modal" role="dialog" aria-labelledby="modal-email-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal('modal-verificar-email')" aria-label="Fechar modal">
+                &times;
+            </button>
+            
+            <h3 id="modal-email-title">📧 Verificar Novo E-mail</h3>
+            <p style="text-align: center; margin-bottom: 1rem;">
+                Enviamos um código para:<br>
+                <strong id="modal-email-destino">novo@email.com</strong>
+            </p>
+            
+            <form id="form-codigo-email" onsubmit="return confirmarVerificacaoEmail(event)">
+                <div class="verification-code" role="group" aria-label="Código de verificação">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 1">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 2">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 3">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 4">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 5">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 6">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modal-verificar-email')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        ✅ Confirmar Código
+                    </button>
+                </div>
+            </form>
+            
+            <div class="resend-link" id="resend-email" aria-live="polite">
+                <span class="timer" style="display: none;">Reenviar em <strong id="timer-email">30</strong>s</span>
+                <a href="#" onclick="reenviarCodigo('email'); return false;">🔄 Reenviar código</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Verificar Telefone -->
+    <div id="modal-verificar-telefone" class="modal" role="dialog" aria-labelledby="modal-telefone-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal('modal-verificar-telefone')" aria-label="Fechar modal">
+                &times;
+            </button>
+            
+            <h3 id="modal-telefone-title">📱 Verificar Novo Telefone</h3>
+            <p style="text-align: center; margin-bottom: 1rem;">
+                Enviamos um SMS para:<br>
+                <strong id="modal-telefone-destino">+55 (11) 99999-9999</strong>
+            </p>
+            
+            <form id="form-codigo-telefone" onsubmit="return confirmarVerificacaoTelefone(event)">
+                <div class="verification-code" role="group" aria-label="Código de verificação">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 1">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 2">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 3">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 4">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 5">
+                    <input type="text" class="code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Dígito 6">
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal('modal-verificar-telefone')">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        ✅ Confirmar Código
+                    </button>
+                </div>
+            </form>
+            
+            <div class="resend-link" id="resend-telefone" aria-live="polite">
+                <span class="timer" style="display: none;">Reenviar em <strong id="timer-telefone">30</strong>s</span>
+                <a href="#" onclick="reenviarCodigo('telefone'); return false;">🔄 Reenviar código</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="js/confperfil.js"></script>
+
+</body>
+</html>

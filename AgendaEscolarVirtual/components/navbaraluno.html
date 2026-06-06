@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Painel do Aluno - Agenda Escolar Virtual">
+    <title>Menu Principal - Aluno | AEV</title>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="navbaraluno.css">
+</head>
+<body>
+
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            
+            <!-- Logo -->
+            <div class="logo">
+                <h1>📖 Menu - AEV</h1>
+            </div>
+
+            <!-- Área do Usuário -->
+            <div class="user-info">
+                <span class="user-name">Olá, <strong>Aluno</strong></span>
+                <a href="../navfuncoes/confperfil.html" class="btn-logout" aria-label="Configurações da conta">
+                    Configurações
+                </a>
+                <a href="../dashboard/index.html" class="btn-logout" aria-label="Sair do sistema">
+                    Sair
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Seleção de Perfil -->
+        <section class="section profile-selection" aria-labelledby="perfil-title">
+            <h2 id="perfil-title">Como deseja acessar?</h2>
+        </section>
+
+        <!-- Seção: Minhas Turmas -->
+        <section class="section" aria-labelledby="turmas-title">
+            <div class="section-header">
+                <h2 id="turmas-title">Minhas Turmas</h2>
+                <a href="../navfuncoes/entrarturma.html" class="btn-primary">
+                    Entrar em Turma
+                </a>
+            </div>
+
+            <div class="turmas-grid" id="turmasContainer">
+                
+                <!-- Turma 1: Matemática -->
+                <article class="turma-card" aria-labelledby="turma-mat-title">
+                    <div class="turma-header">
+                        <h3 id="turma-mat-title">Matemática - 9º Ano</h3>
+                        <span class="turma-type">Professor</span>
+                    </div>
+                    <p>Prof. Carlos Silva</p>
+                    
+                    <div class="turma-info">
+                        <span>📅 Seg, Qua, Sex</span>
+                        <span>⏰ 08:00 - 09:30</span>
+                    </div>
+                    
+                    <a href="../schedules/calendaraluno.html" class="btn-access">
+                        Acessar Agenda
+                    </a>
+                </article>
+
+                <!-- Turma 2: Português -->
+                <article class="turma-card" aria-labelledby="turma-port-title">
+                    <div class="turma-header">
+                        <h3 id="turma-port-title">Português - 8º Ano</h3>
+                        <span class="turma-type">Aluno</span>
+                    </div>
+                    <p>Profª. Ana Paula</p>
+                    
+                    <div class="turma-info">
+                        <span>📅 Ter, Qui</span>
+                        <span>⏰ 10:00 - 11:30</span>
+                    </div>
+                    
+                    <a href="../schedules/calendarAluno.html" class="btn-access">
+                        Acessar Agenda
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Seção: Escolas -->
+        <section class="section" aria-labelledby="escolas-title">
+            <div class="section-header">
+                <h2 id="escolas-title">Escolas</h2>
+                <a href="../navfuncoes/entrarescola.html" class="btn-primary">
+                    Entrar em Escola
+                </a>
+            </div>
+
+            <div class="escolas-grid" id="escolasContainer">
+                
+                <!-- Escola 1 -->
+                <article class="escola-card" aria-labelledby="escola-cef-title">
+                    <div class="escola-icon" aria-hidden="true">🏫</div>
+                    <h3 id="escola-cef-title">Escola CEF 308</h3>
+                    <p>Sua escola está conectada</p>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== MODAIS ========== -->
+    
+    <!-- Modal: Entrar em Turma -->
+    <div id="modalEntrarTurma" class="modal" role="dialog" aria-labelledby="modal-turma-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" aria-label="Fechar modal">&times;</button>
+            
+            <h2 id="modal-turma-title">Entrar em Turma</h2>
+            
+            <form id="formEntrarTurma" novalidate>
+                <div class="input-group">
+                    <label for="codigoTurma">Código da Turma</label>
+                    <input 
+                        type="text" 
+                        id="codigoTurma" 
+                        name="codigoTurma"
+                        placeholder="Ex: MAT-9A-2024" 
+                        pattern="[A-Z]{3}-\d+[A-Z]-\d{4}"
+                        required
+                        aria-required="true"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="tipoAcesso">Tipo de Acesso</label>
+                    <select id="tipoAcesso" name="tipoAcesso" required aria-required="true">
+                        <option value="">Selecione...</option>
+                        <option value="professor">Professor</option>
+                        <option value="aluno" selected>Aluno</option>
+                        <option value="responsavel">Responsável</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Entrar na Turma
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Entrar em Escola -->
+    <div id="modalCriarEscola" class="modal" role="dialog" aria-labelledby="modal-escola-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" aria-label="Fechar modal">&times;</button>
+            
+            <h2 id="modal-escola-title">Entrar em Escola</h2>
+            
+            <form id="formCriarEscola" novalidate>
+                <div class="input-group">
+                    <label for="nomeEscola">Nome da Escola</label>
+                    <input 
+                        type="text" 
+                        id="nomeEscola" 
+                        name="nomeEscola"
+                        placeholder="Ex: Escola Municipal São José" 
+                        required
+                        aria-required="true"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="endereco">Endereço</label>
+                    <input 
+                        type="text" 
+                        id="endereco" 
+                        name="endereco"
+                        placeholder="Rua, número, bairro, cidade" 
+                        required
+                        aria-required="true"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="telefone">Telefone</label>
+                    <input 
+                        type="tel" 
+                        id="telefone" 
+                        name="telefone"
+                        placeholder="(00) 00000-0000"
+                        pattern="\(\d{2}\)\s\d{5}-\d{4}"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="emailEscola">E-mail</label>
+                    <input 
+                        type="email" 
+                        id="emailEscola" 
+                        name="emailEscola"
+                        placeholder="contato@escola.com.br"
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Entrar em Escola
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

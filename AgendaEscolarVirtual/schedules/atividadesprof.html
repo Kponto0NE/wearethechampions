@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Envie atividades em PDF para seus alunos - Agenda Escolar Virtual">
+    <title>Envio de Atividades | Professor - AEV</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="atividadesprof.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            
+            <!-- Navegação e Logo -->
+            <div class="header-left">
+                <button type="button" class="btn btn-back" onclick="voltar()" aria-label="Voltar para página anterior">
+                    ← Voltar
+                </button>
+                <div class="logo">
+                    <h1>📘 Agenda Escolar</h1>
+                </div>
+            </div>
+
+            <!-- Área do Usuário -->
+            <div class="user-info">
+                <div class="user-meta">
+                    <span class="user-name">👨‍🏫 <strong id="professor-nome">Carregando...</strong></span>
+                    <small class="user-turma" id="turma-atual">-</small>
+                </div>
+                <button type="button" class="btn btn-logout" onclick="sair()" aria-label="Sair da conta">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Envio de Atividades -->
+        <section class="section envio-section" aria-labelledby="envio-title">
+            
+            <div class="section-header">
+                <h2 id="envio-title">📤 Envio de Atividades (PDF)</h2>
+                <button type="button" class="btn btn-secondary" onclick="enviarParaTurmaInteira()" aria-label="Enviar atividades para todos os alunos da turma">
+                    📩 Enviar para Turma Inteira
+                </button>
+            </div>
+
+            <!-- Filtros de Busca -->
+            <form class="filters-form" role="search" aria-label="Filtrar alunos" onsubmit="return aplicarFiltros(event)">
+                <div class="filters-row">
+                    <div class="input-group">
+                        <label for="filtro-disciplina">Disciplina / Atividade</label>
+                        <select id="filtro-disciplina" name="disciplina">
+                            <option value="all">Todas as atividades</option>
+                            <option value="mat">Matemática - Álgebra</option>
+                            <option value="port">Português - Interpretação</option>
+                            <option value="hist">História - Revolução Industrial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="busca-aluno">Buscar aluno</label>
+                        <input 
+                            type="search" 
+                            id="busca-aluno" 
+                            name="busca"
+                            placeholder="🔍 Nome ou matrícula..."
+                            aria-label="Buscar por nome ou número de matrícula"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        🔍 Filtrar
+                    </button>
+                </div>
+            </form>
+
+            <!-- Lista de Alunos -->
+            <div id="alunos-container" class="alunos-list" role="list" aria-live="polite">
+                <!-- Cards injetados via JavaScript -->
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ========== MODAL: UPLOAD DE ATIVIDADE ========== -->
+    <div id="modal-atividade" class="modal" role="dialog" aria-labelledby="modal-upload-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <button type="button" class="close" onclick="fecharModal()" aria-label="Fechar modal">
+                &times;
+            </button>
+            
+            <h2 id="modal-upload-title">📎 Anexar Atividade</h2>
+            
+            <p class="modal-subtitle">
+                Aluno: <strong id="modal-aluno-nome">-</strong>
+            </p>
+
+            <!-- Área de Drop/Upload -->
+            <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="Clique ou arraste um arquivo PDF">
+                <span class="drop-icon" aria-hidden="true">📄</span>
+                <p class="drop-text"><strong>Clique ou arraste o PDF aqui</strong></p>
+                <small>Formato: PDF | Máx: 15MB</small>
+                <input type="file" id="file-input" name="arquivo" accept=".pdf" hidden aria-label="Selecionar arquivo PDF">
+            </div>
+
+            <!-- Informações do Arquivo -->
+            <div id="file-info" class="file-info" role="status" aria-live="polite">
+                ✅ <strong>Arquivo:</strong> <span id="file-name"></span> 
+                (<span id="file-size"></span> MB)
+            </div>
+
+            <!-- Barra de Progresso -->
+            <div id="progress-wrapper" class="progress-wrapper" aria-live="polite">
+                <div class="progress-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <small>Enviando...</small>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="fecharModal()">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-enviar" disabled onclick="realizarUpload()">
+                    📤 Enviar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="atividadesprof.js"></script>
+
+</body>
+</html>

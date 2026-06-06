@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Acesse e baixe seus boletins escolares - Agenda Escolar Virtual">
+    <title>Meus Boletins | Aluno - AEV</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="boletimalun.css">
+</head>
+<body>
+
+    <!-- ========== SKIP LINK (Acessibilidade) ========== -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- ========== CABEÇALHO ========== -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            
+            <!-- Navegação e Logo -->
+            <div class="header-left">
+                <button type="button" class="btn btn-back" onclick="voltar()" aria-label="Voltar para página anterior">
+                    ← Voltar
+                </button>
+                <div class="logo">
+                    <h1>📘 Agenda Escolar</h1>
+                </div>
+            </div>
+
+            <!-- Área do Usuário -->
+            <div class="user-info">
+                <div class="user-meta">
+                    <span class="user-name">🎓 <strong id="aluno-nome">Carregando...</strong></span>
+                    <small class="user-turma" id="turma-info">-</small>
+                </div>
+                <button type="button" class="btn btn-logout" onclick="sair()" aria-label="Sair da conta">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Seção: Meus Boletins -->
+        <section class="section boletins-section" aria-labelledby="boletins-title">
+            
+            <div class="section-header">
+                <h2 id="boletins-title">📚 Meus Boletins</h2>
+                <button type="button" class="btn btn-secondary" onclick="baixarTodos()" aria-label="Baixar todos os boletins em ZIP">
+                    📦 Baixar Todos
+                </button>
+            </div>
+            
+            <p class="lead">
+                Acesse seus boletins escolares por período. Clique em <strong>"Visualizar"</strong> para abrir no navegador 
+                ou <strong>"Baixar"</strong> para salvar em seu dispositivo.
+            </p>
+
+            <!-- Grid de Boletins -->
+            <div id="boletinsGrid" class="boletins-grid" role="list" aria-live="polite">
+                <!-- Cards injetados via JavaScript -->
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ========== MODAL: VISUALIZADOR DE PDF ========== -->
+    <div id="pdfModal" class="modal" role="dialog" aria-labelledby="modal-pdf-title" aria-modal="true" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-pdf-title">📄 Visualizando Boletim</h3>
+                <button type="button" class="close" onclick="fecharVisualizadorPdf()" aria-label="Fechar visualizador">
+                    &times;
+                </button>
+            </div>
+            <iframe 
+                id="pdfFrame" 
+                class="pdf-frame" 
+                src="" 
+                title="Visualizador de Boletim"
+                aria-label="Conteúdo do boletim em PDF"
+                loading="lazy"
+            ></iframe>
+            <div class="modal-footer">
+                <a id="modal-download" href="#" download class="btn btn-outline">
+                    ⬇️ Baixar PDF
+                </a>
+                <button type="button" class="btn btn-secondary" onclick="fecharVisualizadorPdf()">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST DE NOTIFICAÇÃO ========== -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- ========== SCRIPT PRINCIPAL ========== -->
+    <script src="boletimalun.js"></script>
+
+</body>
+</html>

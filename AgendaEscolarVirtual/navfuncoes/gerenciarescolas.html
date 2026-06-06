@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<!-- Matheus, arrume o botão de votar. -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie escolas cadastradas - Painel do Professor">
+    <title>Gerenciar Escolas | AEV</title>
+    <link rel="stylesheet" href="gerenciar.css">
+    <style>
+        
+        /* Animações específicas das abas */
+        [role="tabpanel"] {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        [role="tabpanel"].hidden {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .tab-btn.active {
+            position: relative;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: var(--color-light);
+            border-radius: 2px 2px 0 0;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { width: 0; opacity: 0; }
+            to { width: 80%; opacity: 1; }
+        }
+        .tab-btn:not(.active):hover {
+            background: var(--color-primary-light);
+            color: var(--color-light);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <!-- CABEÇALHO -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <div class="header-left">
+                <span class="logo-icon" aria-hidden="true">🏫</span>
+                <h1>Gerenciar Escolas</h1>
+            </div>
+            <div class="user-profile">
+                <span class="user-name">👨‍🏫 Professor</span>
+                <a href="dashboard.html" class="btn-back" aria-label="Voltar ao menu principal">← Voltar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main id="main-content" class="container" role="main">
+        
+        <!-- Abas de Navegação -->
+        <nav class="tabs" role="tablist" aria-label="Seções de gerenciamento">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-cadastrar" id="tab-cadastrar" tabindex="0">
+                ➕ Cadastrar
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-listar" id="tab-listar" tabindex="-1">
+                📋 Escolas Cadastradas
+            </button>
+        </nav>
+
+        <!-- Painel: Cadastrar Nova Escola -->
+        <section id="panel-cadastrar" class="card form-section" role="tabpanel" aria-labelledby="tab-cadastrar">
+            <h2>📝 Nova Escola</h2>
+            <form id="formEscola" novalidate>
+                <div class="input-group">
+                    <label for="nomeEscola">Nome da Escola <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nomeEscola" name="nomeEscola" placeholder="Ex: E.M. Escola Exemplo" required aria-required="true">
+                    <span class="error" id="error-nomeEscola">Informe o nome da escola</span>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="tipoEscola">Tipo / Dependência <span aria-hidden="true">*</span></label>
+                        <select id="tipoEscola" name="tipoEscola" required aria-required="true">
+                            <option value="">Selecione...</option>
+                            <option value="Municipal">Municipal</option>
+                            <option value="Estadual">Estadual</option>
+                            <option value="Federal">Federal</option>
+                            <option value="Privada">Privada</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="nivelEnsino">Nível de Ensino <span aria-hidden="true">*</span></label>
+                        <select id="nivelEnsino" name="nivelEnsino" required aria-required="true">
+                            <option value="">Selecione...</option>
+                            <option value="Infantil">Educação Infantil</option>
+                            <option value="Fundamental">Ensino Fundamental</option>
+                            <option value="Medio">Ensino Médio</option>
+                            <option value="Integrado">Educação Básica Completa</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="cnpj">CNPJ <span aria-hidden="true">*</span></label>
+                        <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" maxlength="18" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" required aria-required="true">
+                        <span class="hint">Formato: 00.000.000/0000-00</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="codigoInep">Código INEP</label>
+                        <input type="text" id="codigoInep" name="codigoInep" placeholder="8 dígitos" maxlength="8" pattern="\d{8}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" pattern="\d{5}-\d{3}">
+                    </div>
+                    <div class="input-group">
+                        <label for="cidade">Cidade <span aria-hidden="true">*</span></label>
+                        <input type="text" id="cidade" name="cidade" placeholder="Ex: São Paulo" required aria-required="true">
+                    </div>
+                    <div class="input-group">
+                        <label for="estado">Estado <span aria-hidden="true">*</span></label>
+                        <select id="estado" name="estado" required aria-required="true">
+                            <option value="">UF...</option>
+                            <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+                            <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+                            <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+                            <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+                            <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                            <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+                            <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+                            <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+                            <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="telefone">Telefone / WhatsApp</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" pattern="\(\d{2}\)\s?\d{4,5}-?\d{4}">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">E-mail Institucional</label>
+                        <input type="email" id="email" name="email" placeholder="contato@escola.edu.br">
+                    </div>
+                </div>
+                <div id="codeResult" class="code-result hidden" role="status" aria-live="polite">
+                    <p><strong>Código de Acesso da Escola:</strong></p>
+                    <div class="code-box">
+                        <span id="generatedCode" class="code-value">---</span>
+                        <button type="button" class="btn-copy" onclick="copyCode('generatedCode')" aria-label="Copiar código">📋 Copiar</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary">Limpar</button>
+                    <button type="submit" class="btn-primary">💾 Cadastrar Escola</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Painel: Lista de Escolas -->
+        <section id="panel-listar" class="card list-section hidden" role="tabpanel" aria-labelledby="tab-listar" hidden>
+            <div class="section-header">
+                <h2>📋 Escolas Cadastradas</h2>
+                <div class="search-box">
+                    <input type="search" id="searchEscolas" placeholder="🔍 Buscar escola..." aria-label="Buscar escolas">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" aria-label="Lista de escolas cadastradas">
+                    <thead>
+                        <tr>
+                            <th scope="col">Escola</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Cidade/UF</th>
+                            <th scope="col">Turmas</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="actions">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="escolasTableBody">
+                        <tr data-id="1">
+                            <td><strong>Escola CEF 308</strong><br><small class="text-muted">CNPJ: 12.345.678/0001-90</small></td>
+                            <td><span class="badge badge-info">Municipal</span></td>
+                            <td>Santa Maria / RS</td>
+                            <td><span class="badge badge-primary">12 turmas</span></td>
+                            <td><span class="badge badge-success">Ativa</span></td>
+                            <td class="actions">
+                                <button class="btn-icon btn-edit" aria-label="Editar escola" onclick="editarEscola(1)">✏️</button>
+                                <button class="btn-icon btn-users" aria-label="Ver usuários" onclick="verUsuarios(1)">👥</button>
+                                <button class="btn-icon btn-delete" aria-label="Excluir escola" onclick="confirmarExclusao(1, 'escola')">🗑️</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button class="btn-page" disabled>← Anterior</button>
+                <span class="page-info">Página 1 de 3</span>
+                <button class="btn-page">Próxima →</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: Confirmar Exclusão -->
+    <div id="modalExcluir" class="modal" role="alertdialog" aria-labelledby="modal-excluir-title" aria-modal="true" hidden>
+        <div class="modal-content modal-sm">
+            <h3 id="modal-excluir-title">⚠️ Confirmar Exclusão</h3>
+            <p id="modal-excluir-msg">Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="fecharModal('modalExcluir')">Cancelar</button>
+                <button type="button" class="btn-danger" onclick="executarExclusao()">🗑️ Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ========== MÓDULO DE ABAS (Embutido para facilitar) ==========
+        (function() {
+            'use strict';
+            
+            function initTabs() {
+                const tabs = document.querySelectorAll('.tab-btn');
+                const panels = document.querySelectorAll('[role="tabpanel"]');
+                
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        ativarAba(tab, tabs, panels);
+                    });
+                    tab.addEventListener('keydown', (e) => handleTabKeyboard(e, tab, tabs));
+                });
+                
+                // Suporte a hash na URL
+                if (window.location.hash) {
+                    const targetTab = document.querySelector(`[aria-controls="${window.location.hash.slice(1)}"]`);
+                    if (targetTab) ativarAba(targetTab, tabs, panels);
+                }
+            }
+            
+            function ativarAba(tabAtiva, todasTabs, todosPanels) {
+                const targetId = tabAtiva.getAttribute('aria-controls');
+                const targetPanel = document.getElementById(targetId);
+                if (!targetPanel) return;
+                
+                todasTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.setAttribute('tabindex', '-1');
+                });
+                todosPanels.forEach(panel => {
+                    panel.classList.add('hidden');
+                    panel.setAttribute('hidden', '');
+                });
+                
+                tabAtiva.classList.add('active');
+                tabAtiva.setAttribute('aria-selected', 'true');
+                tabAtiva.setAttribute('tabindex', '0');
+                
+                targetPanel.classList.remove('hidden');
+                targetPanel.removeAttribute('hidden');
+                targetPanel.style.opacity = '0';
+                targetPanel.style.transform = 'translateY(10px)';
+                requestAnimationFrame(() => {
+                    targetPanel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    targetPanel.style.opacity = '1';
+                    targetPanel.style.transform = 'translateY(0)';
+                });
+                
+                if (history.replaceState) {
+                    history.replaceState(null, null, `#${targetId}`);
+                }
+                const titulo = targetPanel.querySelector('h2');
+                if (titulo) titulo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            function handleTabKeyboard(e, tabAtual, todasTabs) {
+                const tabsArray = Array.from(todasTabs);
+                const currentIndex = tabsArray.indexOf(tabAtual);
+                let nextIndex;
+                switch (e.key) {
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        nextIndex = (currentIndex + 1) % tabsArray.length;
+                        tabsArray[nextIndex].focus();
+                        break;
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        nextIndex = (currentIndex - 1 + tabsArray.length) % tabsArray.length;
+                        tabsArray[nextIndex].focus();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        tabsArray[0].focus();
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        tabsArray[tabsArray.length - 1].focus();
+                        break;
+                }
+            }
+            
+            window.mudarAba = function(tabId) {
+                const tab = document.getElementById(tabId);
+                if (tab) {
+                    const tabs = document.querySelectorAll('.tab-btn');
+                    const panels = document.querySelectorAll('[role="tabpanel"]');
+                    ativarAba(tab, tabs, panels);
+                }
+            };
+            
+            // Inicializar quando o DOM estiver pronto
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTabs);
+            } else {
+                initTabs();
+            }
+        })();
+        
+        // ========== FUNÇÕES AUXILIARES ==========
+        function copyCode(elementId) {
+            const code = document.getElementById(elementId)?.textContent;
+            if (code && code !== '---') {
+                navigator.clipboard.writeText(code).then(() => showToast('📋 Código copiado!', 'success'));
+            }
+        }
+        
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+        
+        function fecharModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.hidden = true;
+                modal.style.display = 'none';
+            }
+        }
+        
+        function confirmarExclusao(id, tipo) {
+            const modal = document.getElementById('modalExcluir');
+            const msg = document.getElementById('modal-excluir-msg');
+            if (modal && msg) {
+                msg.textContent = `Tem certeza que deseja excluir esta ${tipo}? Esta ação não pode ser desfeita.`;
+                modal.hidden = false;
+                modal.style.display = 'block';
+                // Armazena dados para exclusão
+                modal.dataset.itemId = id;
+                modal.dataset.itemType = tipo;
+            }
+        }
+        
+        function executarExclusao() {
+            const modal = document.getElementById('modalExcluir');
+            const id = modal?.dataset.itemId;
+            const tipo = modal?.dataset.itemType;
+            console.log(`Excluindo ${tipo} ID: ${id}`);
+            showToast(`✅ ${tipo === 'escola' ? 'Escola' : 'Turma'} excluída com sucesso!`, 'success');
+            fecharModal('modalExcluir');
+            // Aqui você removeria a linha da tabela via JS
+        }
+        
+        function verUsuarios(id) {
+            showToast(`👥 Carregando usuários da escola ID: ${id}...`, 'info');
+            // Implementar carregamento de usuários
+        }
+        
+        function editarEscola(id) {
+            showToast(`✏️ Editando escola ID: ${id}...`, 'info');
+            // Implementar edição
+        }
+        
+        // Submit do formulário
+        document.getElementById('formEscola')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Validação simples
+            const nome = document.getElementById('nomeEscola').value;
+            if (!nome) {
+                document.getElementById('error-nomeEscola').style.display = 'block';
+                return;
+            }
+            // Gerar código simulado
+            const codigo = 'ESC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            document.getElementById('generatedCode').textContent = codigo;
+            document.getElementById('codeResult').classList.remove('hidden');
+            showToast('✅ Escola cadastrada com sucesso!', 'success');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
